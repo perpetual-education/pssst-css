@@ -4,13 +4,19 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh; 
-	/* be at least a full viewport height */
-	/* consider 100svh and 100dvh too */
-} 
+	/* 
+		be at least a full viewport height
+		consider 100svh and 100dvh too 
+	*/
+}
 
 main {
 	flex-grow: 1; 
-	/* fill up available space which happens push the footer down to the bottom */
+	/* 
+		fill up available space 
+		which happens to push the footer 
+		down to the bottom of the body
+	*/
 }
 
 inner-column {
@@ -18,13 +24,19 @@ inner-column {
 	/*	width: 98%; maybe? */
 	max-width: 1100px; /* could be a variable in settings */
 	margin-inline: auto; /* horizontally center this by default */
-	padding: 30px 16px; /* a loose default */
+	padding: 30px 16px; 
+		/* 
+			a loose default for now 
+			you probably want this in the individual modules
+		*/
 
 	container-type: inline-size;
 }
 
-/*.site-header {
+/*
+.site-header {
 	position: sticky;
 	top: 0;
 	z-index: 5;
-}*/
+}
+*/

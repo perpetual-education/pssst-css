@@ -3,5 +3,7 @@
 @import 'reset.css' layer(preset); 
 /* remove meddlesome user-agent-styles */
 
-/*and stuff like this*/
-/*https://gist.github.com/murtaugh/5247154*/
+/*
+	and you might want more specific resets
+	example: https://gist.github.com/murtaugh/5247154
+*/

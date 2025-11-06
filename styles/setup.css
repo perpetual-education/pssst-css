@@ -4,10 +4,10 @@
 html {
   box-sizing: border-box;
 }
-*, *:before, *:after {
+*, *::before, *::after {
   box-sizing: inherit;
 } /* https://www.paulirish.com/2012/box-sizing-border-box-ftw */
-/* not sure... if this is really a winner anymore - with the inherit - let's reconsider $todo */
+/* not sure... if this is really a winner anymore - with the inherit* - let's reconsider $todo */
 
 a {
 	/* we use links as parent elements so often, that we can default to this */
@@ -17,6 +17,7 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+/* we could use :where ... and maybe only apply to things with a class? */
 
 /* put the classic link styles back */
 p a {

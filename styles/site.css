@@ -1,0 +1,57 @@
+/* should we use layers? Are there any real advantages in this situation? */
+
+/* P reset   (resets) */
+@import 'preset.css';
+
+/* S etup */
+@import 'setup.css';
+
+/* S setings */
+@import 'settings.css';
+
+/* S tructure */
+@import 'structure.css';
+
+/* T ypography */
+@import 'typography.css';
+
+/* C omponents */
+@import 'components.css';
+
+/* S tuff (modules) */
+@import 'modules.css';
+
+/* S ections and more stuff */
+.section-name {
+
+}
+
+.page-name {
+	.section-name {
+		/* context specific styles */
+	}
+}
+
+[data-theme='party-time'] {
+	.page-name {
+
+	}
+	.section-name {
+
+	}
+	module-name {
+
+	}
+}
+
+
+/* then other contextual styles */
+body {
+	background-color: var(--paper);
+	color: var(--ink);
+}
+
+.my-fantastic-image {
+	max-width: 300px;
+	border-bottom-right-radius: 30px;
+}

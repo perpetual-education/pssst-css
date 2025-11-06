@@ -7,54 +7,63 @@
 */
 
 body {
-	-webkit-font-smoothing: antialiased; 
-	/* because Brian said to -- $todo confirm */
+	font-family: sans-serif;
 }
 
-.calm-voice, p, li {
-	font-family: sans-serif;
+.calm-voice, p {
 	font-size: 1rem;
 	line-height: 1.4;
+
+	strong {
+		font-weight: 700;
+	}
+
+	em {
+		font-style: italic;
+	}
 }
 
 .strong-voice {
-	font-family: sans-serif;
 	font-size: 24px;
 }
 
 .attention-voice {
-	font-family: sans-serif;
 	font-size: 30px;
 }
 
 .loud-voice {
-	font-family: sans-serif;
+	font-family: sans-serif; /* opt in to display fonts */
 	font-size: clamp(36px, 5vw, 60px);
-}
 
-@media (min-width: 600px) {
-	.loud-voice {
+	@media (min-width: 600px) {
 		font-weight: 700; /* or variable font */
 	}
 }
 
-:is(.calm-voice, p) em {
-	font-style: italic;
+.quiet-voice {
+	font-size: 0.75rem;
+	line-height: 1.4;
 }
 
-:is(.calm-voice, p) strong {
-	font-weight: 700;
-}
+/* 
+	these would be scoped to section or to an article element 
+	this is just a loose setting for now
+	or smaller group of article-like styles such as a <text-content> custom element 
+*/
+article {
+	p {
+		+ p {
+			margin-top: 1em;
+		}
+	}
 
-/* these would be scoped to section or to an article element */
-/* this is just a loose setting for now */
-/* or smaller group of article-like styles such as a <text-content> custom element */
-p + p {
-	margin-top: 1em;
-}
+	h2 {
+		+ p {
+			margin-top: 1em;
+		}
+	}
 
-h2 + p {
-	margin-top: 20px;
+	/* etc */
 }
 
 code {
