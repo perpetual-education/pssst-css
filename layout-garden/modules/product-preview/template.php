@@ -1,5 +1,5 @@
 
-<article class='article-card'>
+<article class='product-preview'>
 	<picture>
 		<img src="../images/landscape.jpg" alt="">
 	</picture>
