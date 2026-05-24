@@ -1,3 +1,8 @@
+@import 'big-heading/style.css';
+@import 'call-to-action/style.css';
+@import 'generic-text/style.css';
+@import 'graphic-diptych/style.css';
+@import 'product-grid/style.css';
 @import 'site-map/style.css';
 
 .america {
