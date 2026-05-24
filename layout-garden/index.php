@@ -4,8 +4,8 @@
 	<head>
 		<title>PSSST CSS example with PHP</title>
 
-		<link rel='stylesheet' href='../styles/index.css'>
-		<link rel='stylesheet' href='modules/modules.css'>
+		<link rel='stylesheet' href='styles/index.css' />
+		<link rel='stylesheet' href='modules/modules.css' />
 	</head>
 
 	<body>
