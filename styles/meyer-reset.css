@@ -1,0 +1,98 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/*
+	===== Notes on what isn't needed anymore (or shouldn't be) =====
+
+	This file is kept as the canonical Meyer reference. It's NOT what the
+	kit ships — see preset.css for the narrow version we actually use.
+	The annotations below explain why we narrowed.
+
+	Dead-weight (browsers handle these consistently now):
+
+	- "HTML5 display-role reset" block (article, aside, details, etc.) —
+	  every modern browser ships these as block by default. The block was
+	  for IE9 and below. Applies to nothing visible in 2026.
+
+	- HTML4 element names in the giant element list (applet, acronym, big,
+	  center, tt, strike) — these elements either don't render or were
+	  removed in HTML5. The rules apply to nothing.
+
+	Over-reaching (Meyer does things we don't want):
+
+	- vertical-align: baseline on every element — flattens <sub> and <sup>.
+	  Breaks H₂O chemistry, E=mc² math, footnotes, trademarks.
+
+	- ol, ul { list-style: none } — strips bullets from every list. Also
+	  hits the Safari VoiceOver list-semantics bug. Andy Bell's pattern
+	  (default bullets, role='list' to opt out) only makes sense if we
+	  don't have this rule. We dropped it for that reason.
+
+	- body { line-height: 1 } — makes paragraphs cramped (descenders touch
+	  ascenders of the next line). Modern resets default to 1.5 for
+	  readability. The kit's voice classes set their own line-heights.
+
+	Doesn't actually solve (Meyer's reach is too narrow):
+
+	- font: inherit only applies to the listed elements, not form controls.
+	  <button>, <input>, <textarea>, <select> still don't inherit font in
+	  2026. We add a separate rule for those in preset.css.
+
+	Still doing real work (kept in our narrow version):
+
+	- margin: 0 / padding: 0 / border: 0 on flow elements (headings,
+	  paragraphs, lists, fieldset) — voice classes set rhythm; we want
+	  the slate clean.
+	- table { border-collapse: collapse; border-spacing: 0 } — almost
+	  always wanted.
+	- quotes: none + ::before/::after content: '' on <q> and <blockquote>
+	  — drops browser auto-inserted quote marks so authors type curly
+	  quotes inline (survives style-stripping, RSS, reader view).
+*/
