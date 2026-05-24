@@ -1,0 +1,36 @@
+/*
+	Cursor reset — the affordance defaults the browser doesn't quite get right.
+
+	Optional. Toggle on via @import in preset.css.
+
+	Inspired by: https://gist.github.com/murtaugh/5247154
+*/
+
+html,
+body {
+	cursor: default;
+}
+
+code {
+	cursor: text;
+}
+
+/*
+	textarea and input[type="text"] already receive
+	"cursor: text" via browsers' base stylesheets
+*/
+
+a,
+label,
+button,
+input[type="submit"],
+input[type="button"],
+input[type="radio"],
+input[type="checkbox"] {
+	cursor: pointer;
+}
+
+button[disabled],
+input[disabled] {
+	cursor: default;
+}
