@@ -1,0 +1,26 @@
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	/* be at least a full viewport height; consider 100svh and 100dvh too */
+}
+
+main {
+	flex-grow: 1;
+	/* fill up available space which pushes the footer down */
+
+	display: grid;
+	grid-template-columns: ;
+}
+
+inner-column {
+	display: block;
+	max-width: var(--inner-column-max, 1400px);
+
+	/* just to show that the HTML could really be in any grid 
+	- and the CSS could be totally different at the site-structure level */
+
+	border: 2px dashed red;
+
+	padding: var(--inner-column-padding-block, 30px) var(--inner-column-padding-inline, 16px);
+}

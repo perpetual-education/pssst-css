@@ -1,14 +1,3 @@
-@layer setup;
-
-/* set global box-model so that padding and borders stay inside */
-html {
-  box-sizing: border-box;
-}
-*, *::before, *::after {
-  box-sizing: inherit;
-} /* https://www.paulirish.com/2012/box-sizing-border-box-ftw */
-/* not sure... if this is really a winner anymore - with the inherit* - let's reconsider $todo */
-
 a {
 	/* we use links as parent elements so often, that we can default to this */
 	display: block;
@@ -19,34 +8,74 @@ a {
 }
 /* we could use :where ... and maybe only apply to things with a class? */
 
-/* put the classic link styles back */
-p a {
+/* put the classic link styles back for prose links — and anything that opts
+   in via the .link class. <p> is the auto-trigger; everywhere else, the
+   author asks for prose styling explicitly. */
+p a,
+a.link {
 	display: inline;
-	color: blue;
+	color: var(--link-color, blue);
 	text-decoration: underline;
 }
 
-/* picture is inline by default, but we need it to accept block-level images in it */
+/* picture is inline by default, but we need it to accept block-level images in it.
+   overflow: clip preps for border-radius on the wrapper. The img inside clips
+   to the rounded corners. Style the parent; the img is just squishy content like text is.
+   (Clip over hidden because we just want clipping — clip doesn't create a scroll
+   container the way hidden does. Lighter, more accurate to intent.) */
 picture {
 	display: block;
-	overflow: hidden;
+	overflow: clip;
 }
 
-/* globally set images to fill their parent and keep their ratio as the default */
-img {
+/* Fill-parent media: img, video, svg, canvas all share the same opinion:
+   block layout, take the parent's width, maintain aspect ratio.
+   Control size by setting max-width / width on the parent.
+
+   Canvas note: the drawing surface (canvas.width / canvas.height attributes)
+   stays independent of the displayed size. If you care about pixel-perfect
+   rendering at the display size, match the buffer to the display in JS. */
+img,
+video,
+svg,
+canvas {
 	display: block;
 	width: 100%;
 	height: auto;
 }
 
-/* we generally need SVGs to act the same way as images */
-svg {
-  display: block;
-  width: 100%;
-  /* Safari seems to need height: 100% $todo - revisit */
+/* iframe and audio are inline by default — the magic 4px baseline space.
+   display: block will remove the magic 4px baseline space. 
+   No aspect ratio to compute from, 
+   so author stays in charge of dimensions. */
+iframe,
+audio {
+	display: block;
 }
 
-/* selects for autonomous customelements which are inline by default */
+/* author opts a list out of bullets — and keeps list semantics for
+   screen readers — by adding role='list' to the <ul> or <ol>.
+   Use this for lists of cards, products, nav items, anything that's
+   semantically a list but doesn't want bulleted prose styling. 
+
+	In safari, if you remove list style - it also assumes you then don't want 
+	a semantic list and removes screenreader info, so - this is doing double duty
+*/
+ul[role='list'],
+ol[role='list'] {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Autonomous custom elements (<inner-column>, <text-content>, etc.) 
+	(custom HTML elements that aren't registered with JS in this case)
+	(only used for our opinionated system to visually differentiate from divs)
+	are inline by default. We use them often as semantic wrappers without
+   registering them in JS.
+
+   :not(:defined) matches custom elements that haven't been registered.
+   :where() keeps specificity at zero so later rules can override. */
 :where(:not(:defined)) {
 	display: block;
 }

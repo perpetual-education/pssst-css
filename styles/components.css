@@ -1,5 +1,13 @@
-@layer components;
+/*
+	Components — small reusable parts. Cards, badges, callouts, kebabs,
+	anything that's reused from more than one page or module. Smaller than
+	page modules, larger than primitives.
 
-/* buttons and icons and smaller reusable bits here */
+	Slot. Project fills in as components get built. Pattern (same as layouts/):
+	each component gets its own file in components/, filename matches the
+	component's wrapper class, imported here.
+*/
 
-@import 'forms.css' layer(components);
+/* @import 'components/card.css'; */
+/* @import 'components/badge.css'; */
+/* @import 'components/callout.css'; */

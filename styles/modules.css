@@ -1,5 +1,13 @@
-@layer modules;
+/*
+	Page modules — larger compositional units. Authors stack these inside
+	a page's content area to build pages (CTA blocks, feature lists,
+	media + text blocks, etc.).
 
-@import '../modules/your-cool-module-component-thing/style.css' layer(modules);
+	Slot. Project fills in as modules get built. Each page module gets its
+	own file in modules/, filename matches the module's wrapper class,
+	imported here.
+*/
 
-@import '../modules/style-guide/amazing-swatches/style.css' layer(modules);
+/* @import 'modules/cta.css'; */
+/* @import 'modules/feature-list.css'; */
+/* @import 'modules/media-text.css'; */

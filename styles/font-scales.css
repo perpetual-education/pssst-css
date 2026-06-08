@@ -1,0 +1,82 @@
+/*
+	Raw font inventory + type scales — the "crayon box of type sizes."
+
+	Two pieces:
+	  1. Font primitives — the fonts available to the kit
+	  2. The scale system — anchor + ratio that compute step sizes
+	     (12 musical-interval ratios available; one ratio = one scale)
+
+	Like color-scales, this is never reassigned — settings.css and
+	typography.css pick from these to compose voices.
+
+	Replace or extend with your own font stacks and scales when your
+	project has its own identity.
+
+
+
+	READ ME!!!!!!
+
+
+	So ,please do understand how this works -- but consider if your project really needs this.
+
+	For some of our projects, we're doing multibrand/multi-theme/multi-mode stuff.
+
+	If this is a single project with one visual language -- than all these extra layers of things feeding into each other are just going to be a big mess for no real value
+
+*/
+
+
+/* ===== FONT PRIMITIVES ===== */
+/* Drop @font-face declarations above this or use system stacks as defaults. */
+
+:root {
+	--font-sans: system-ui, sans-serif;
+	--font-serif: Georgia, serif;
+	--font-mono: Menlo, Consolas, monospace;
+}
+
+
+/* ===== TYPE SCALE SYSTEM =====
+   Two knobs generate the whole scale:
+
+     --type-anchor    the document's optical baseline (typically 1rem).
+                      Themes override when a different font reads visibly
+                      larger or smaller — keeps perceived size consistent
+                      across font swaps.
+
+     --scale-ratio    the geometric ratio between consecutive steps.
+
+   Steps compute from --step-0 via calc() so the math is visible — change
+   either knob and watch every step recompute. */
+
+:root {
+	--type-anchor: 1rem;
+	--scale-ratio: 1.25; /* major-third default */
+
+	--step-down-2: calc(var(--step-down-1) / var(--scale-ratio));
+	--step-down-1: calc(var(--step-0) / var(--scale-ratio));
+	--step-0: var(--type-anchor);
+	--step-up-1: calc(var(--step-0) * var(--scale-ratio));
+	--step-up-2: calc(var(--step-up-1) * var(--scale-ratio));
+	--step-up-3: calc(var(--step-up-2) * var(--scale-ratio));
+	--step-up-4: calc(var(--step-up-3) * var(--scale-ratio));
+	--step-up-5: calc(var(--step-up-4) * var(--scale-ratio));
+}
+
+
+/* ===== AVAILABLE SCALES =====
+   12 musical-interval ratios. Set data-type-scale on <html> to swap;
+   the whole scale re-tunes from one knob. */
+
+[data-type-scale='minor-second']     { --scale-ratio: 1.067; }
+[data-type-scale='major-second']     { --scale-ratio: 1.125; }
+[data-type-scale='minor-third']      { --scale-ratio: 1.2; }
+[data-type-scale='major-third']      { --scale-ratio: 1.25; }  /* default */
+[data-type-scale='perfect-fourth']   { --scale-ratio: 1.333; }
+[data-type-scale='augmented-fourth'] { --scale-ratio: 1.414; }  /* paper 1:√2 */
+[data-type-scale='perfect-fifth']    { --scale-ratio: 1.5; }
+[data-type-scale='golden-ratio']     { --scale-ratio: 1.618; }
+[data-type-scale='major-sixth']      { --scale-ratio: 1.667; }
+[data-type-scale='minor-seventh']    { --scale-ratio: 1.778; }
+[data-type-scale='major-seventh']    { --scale-ratio: 1.875; }
+[data-type-scale='octave']           { --scale-ratio: 2; }

@@ -1,73 +1,186 @@
-@layer typography;
+@font-face {
+  font-family: 'CabinetGrotesk-Variable';
+  src: url('../fonts/CabinetGrotesk-Variable.woff2') format('woff2'),
+       url('../fonts/CabinetGrotesk-Variable.woff') format('woff'),
+       url('../fonts/CabinetGrotesk-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
 
-/* Should we pull in @fonts here? */
-/* 
-	don't think you can... might have to be higher up (the top of) the food chain! 
-	but ideally... they'd be here...  $todo - look into this
+/*
+	Typography — the applied layer.
+
+	Three patterns demonstrated across three voices so a project sees the
+	range and picks the level of indirection it actually needs:
+
+	  calm-voice       static values         — simplest. No tokens. Just write the rule.
+	  strong-voice     scale steps           — middle. References --step-up-N from font-scales.
+	                                            Swap the scale ratio, voice retunes.
+	  attention-voice  per-voice tokens      — full chain. --attention-voice-* tokens
+	                                            sit between class and scale. Project can
+	                                            override the voice without touching the
+	                                            class or the scale.
+
+	Pick the level that matches what you need. Most voices only need the
+	first two patterns. The full token chain matters when you want a voice
+	to be independently swappable (multi-theme, dashboard module overrides,
+	teacher-styled courses, etc.).
+
+	The OTHER voices below (loud, quiet, data, label) use the scale-steps
+	pattern as a practical default. Promote any of them to the full token
+	chain by following attention-voice's shape.
+
+	Voices carry font / size / rhythm — NOT color. Color is a scope/tone
+	concern (data-emphasis, data-tone) applied in context. If you find
+	yourself wanting to add `color:` to a voice, stop — reach for a
+	scope/tone instead.
 */
 
+
+/* ===== SEMANTIC FONT TOKENS ===== */
+/* What each font is FOR. Voices consume these (or skip and use --font-* directly). */
+
+:root {
+	--font-heading: var(--font-sans);
+	--font-body: var(--font-serif);
+	--font-ui: var(--font-sans);
+	--font-code: var(--font-mono);
+}
+
+
+/* ===== ELEMENT DEFAULTS ===== */
+
 body {
-	font-family: sans-serif;
+	font-family: var(--font-body);
+	font-size: var(--type-anchor);
 }
 
-.calm-voice, p {
+h1, h2, h3, h4, p {
+	text-wrap: pretty;
+}
+
+
+/* ===== VOICE CLASSES =====
+
+	Each voice below demonstrates one of the three patterns. The pattern
+	used is named in the comment above the rule.
+*/
+
+
+/* calm — STATIC VALUES (simplest pattern).
+   Just write the rule. No tokens, no indirection. Easy to read,
+   easy to change — but the scale won't retune it. */
+
+.calm-voice,
+p {
+	font-family: serif;
 	font-size: 1rem;
-	line-height: 1.4;
+	line-height: 1.5;
+	max-width: 72ch;
+	text-wrap: pretty;
 
-	strong {
-		font-weight: 700;
-	}
-
-	em {
-		font-style: italic;
-	}
+	em { font-style: italic; }
+	strong { font-weight: 700; }
 }
+
+
+/* strong — SCALE STEPS (middle pattern).
+   References --step-up-N from font-scales. Swap the scale ratio
+   on <html data-type-scale='X'> → this voice retunes. */
 
 .strong-voice {
-	font-size: 24px;
+	font-family: var(--font-heading);
+	font-size: var(--step-up-1);
+	line-height: 1.2;
+	font-weight: 500;
+}
+
+
+/* attention — PER-VOICE TOKENS (full chain pattern).
+   Per-voice tokens declared at root; class consumes them. A project can
+   override --attention-voice-* anywhere in the cascade (settings, a
+   data-mode scope, a single element) and retune just this voice. */
+
+:root {
+	--attention-voice-font-family: var(--font-heading);
+	--attention-voice-font-size: var(--step-up-3);
+	--attention-voice-line-height: 1.2;
 }
 
 .attention-voice {
-	font-size: 30px;
+	font-family: var(--attention-voice-font-family);
+	font-size:   var(--attention-voice-font-size);
+	line-height: var(--attention-voice-line-height);
 }
 
-.loud-voice {
-	font-family: sans-serif; /* opt in to display fonts */
-	font-size: clamp(36px, 5vw, 60px);
 
-	@media (min-width: 600px) {
-		font-weight: 700; /* or variable font */
-	}
+/* ===== Remaining voices — scale-steps pattern (the practical default) ===== */
+
+.loud-voice {
+	font-family: var(--font-heading);
+	font-size: var(--step-up-5);
+	font-weight: 500;
+	line-height: 1.2;
+	max-width: 28ch;
 }
 
 .quiet-voice {
-	font-size: 0.75rem;
+	font-family: var(--font-ui);
+	font-size: var(--step-down-1);
+	line-height: 1.3;
+}
+
+.data-voice {
+	font-family: var(--font-code);
+	font-size: calc(var(--step-0) * 0.85);
 	line-height: 1.4;
+	letter-spacing: 0.01em;
+	font-feature-settings: 'tnum' 1;
 }
 
-/* 
-	these would be scoped to section or to an article element 
-	this is just a loose setting for now
-	or smaller group of article-like styles such as a <text-content> custom element 
-*/
-article {
-	p {
-		+ p {
-			margin-top: 1em;
-		}
-	}
-
-	h2 {
-		+ p {
-			margin-top: 1em;
-		}
-	}
-
-	/* etc */
+.label-voice {
+	font-family: var(--font-ui);
+	font-size: var(--step-down-1);
+	line-height: 1.3;
+	font-weight: 500;
 }
+
+
+/* ===== ARTICLE / PROSE RHYTHM =====
+   Sibling relationships for prose containers. Voices set per-element
+   rendering; this sets the spacing between siblings. */
+
+:where(article, text-content) {
+	p + p { margin-top: 1em; }
+
+	h2 + p, h3 + p { margin-top: 1em; }
+	p + h2, p + h3 { margin-top: 1.3em; }
+}
+
+
+/* ===== CODE ===== */
+/* Just the font and size. Color isn't a typography concern — leave it to
+   themes/scopes. */
 
 code {
-	font-family: monospace;
-	font-size: 1.1em;
-	color: green;
+	font-family: var(--font-code);
+	font-size: 0.9em;
 }
+
+
+/* ===== OPTIONAL VOICES =====
+   Voices to add when a project hits the need. Pick whichever pattern
+   matches the need (static, scale steps, or per-voice tokens).
+
+     hero-voice         — display-display, even louder than loud
+     caption-voice      — figure / photo captions, smaller than calm
+     pull-quote-voice   — set-off quotes in editorial layouts
+     code-voice         — block code (separate from inline <code>)
+     numeric-voice      — large display numbers (stats, hero stats)
+     metric-voice       — dashboard metric values
+     app-data-voice     — app chrome, stable regardless of user type-scale
+     high-voice         — uppercase tracked-out (skip links, eyebrows)
+     legal-voice        — fine print, disclaimers
+     whisper-voice      — quieter than quiet (credits, captions)
+*/

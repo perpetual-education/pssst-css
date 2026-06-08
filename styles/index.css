@@ -1,69 +1,49 @@
 
 /* P */
-@import 'preset.css' layer(preset);
+@import 'preset.css';
 
 /* S */
-@import 'setup.css' layer(setup);
+@import 'setup.css';
+
+/* raw inventory — font scales loaded first (type is the more fundamental
+   identity layer; color is painted on top). Settings picks from both. */
+@import 'font-scales.css';
+@import 'color-scales.css';
 
 /* S */
-@import 'settings.css' layer(settings);
+@import 'settings.css';
 
 /* S */
-@import 'structure.css' layer(structure);
+@import 'structure.css';
 
 /* T */
-@import 'typography.css' layer(typography);
+@import 'typography.css';
+
+
+/* Interactive — opt-in. Sites that have interactive controls or
+   action-style CTAs turn these on. Content-and-links-only sites leave
+   them off. Controls = inputs/textareas/selects. Actions = buttons + CTAs. */
+/* @import 'interaction/controls.css'; */
+/* @import 'interaction/actions.css'; */
 
 
 /* C */
-@import 'components.css' layer(components);
+@import 'components.css';
 
 /* S */
-@import 'modules.css' layer(modules);
+@import 'modules.css';
+
+
+/* Scratch — last; overrides anything above. Holding area for things in
+   transit. Walk it regularly; empty is the goal. */
+@import 'scratch.css';
 
 /* S */
 
 
-/* what do layers help with? */
-.x-forms .x .form-x-label label span.label {
-	/* 
-		what if you had to override this 
-		from a third-party form library? 
-	*/
-}
-
-.x-forms {
-	.label {
-		color: red;
-	}
-}
-
-/* 
-	this open wild west area will override anything in layers 
-
-	that's nice for if you want to override a complicated third-party form library or something...  (see forms.css)
-
-	but you could also cause lots of trouble - too. So, it's not all just amazingly safe now.
-*/
-
-.my-fantastic-image {
-	max-width: 300px;
-	border-bottom-right-radius: 30px;
-}
 
 
 
-@layer component {
-	input[type='text'] {
-		padding: 2em;
-	}
-}
-
-/* 
-	it looks like you can also override 
-	within specific layers
-	and keep that predefined order in place
-*/
 
 
 

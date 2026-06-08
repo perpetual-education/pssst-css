@@ -1,0 +1,98 @@
+/*
+	scratch.css — the holding area.
+
+	Loaded last from index.css so anything here overrides what's above it.
+	Use this for:
+	  - Things in transit (moved out of one file, not yet placed in another)
+	  - Things you're trying out before deciding where they belong
+	  - Quick overrides while building
+
+	Walk this regularly. Empty is the goal. Don't let it accumulate.
+*/
+
+
+/* ===== In transit: belong in settings.css when settings gets a motion section ===== */
+
+/*
+	interpolate-size — controls whether CSS can animate to and from keyword
+	values like 'auto', 'min-content', 'max-content', 'fit-content'.
+
+	  numeric-only    (default)  transitions to 'auto' snap, no animation.
+	  allow-keywords             transitions to 'auto' animate smoothly.
+
+	Turning this on enables CSS-only height animations for accordions, drawers,
+	and expand/collapse — the long-standing "can't animate to auto" papercut.
+
+	Gated by prefers-reduced-motion so motion-sensitive users automatically
+	get the default snap behavior.
+*/
+
+/* :root {
+	@media (prefers-reduced-motion: no-preference) {
+		interpolate-size: allow-keywords;
+	}
+} */
+
+
+/* ===== In transit: belong in settings.css colocated with scheme/dark-mode ===== */
+
+/*
+	color-scheme — tells the browser which color schemes the page is designed
+	to support. Affects browser-drawn UI:
+
+	  - native form controls (<select>, checkboxes, date pickers)
+	  - scrollbar
+	  - default text selection color
+	  - autofill background
+
+	  light dark   — render native UI to match the OS preference.
+	  light        — render native UI in light, regardless of OS.
+
+	Default (no rule) is 'light'. Enable 'light dark' when your site actually
+	supports dark mode; otherwise dark-mode users see dark scrollbars and
+	dark <select> dropdowns on a light page.
+*/
+
+/* html {
+	color-scheme: light dark;
+} */
+
+
+/* ===== Future: outbound link indicators (belongs in setup.css near link rules) ===== */
+
+/*
+	Append an arrow after external / new-tab links so users see they're going
+	off-site. Use two-value content syntax to keep the arrow VISUAL only —
+	screen readers skip it (the second value after / is the AT alternative,
+	empty string = silent).
+
+	External (off-site): →
+	New tab:             ⬏
+
+	Adjust the host exclusions for your project's own domain.
+*/
+
+/* External (off-site, http(s) but not our own domain) */
+/* a[href^='http']:not([href*='YOUR-DOMAIN.com'])::after {
+	content: '\2192' / '';
+	display: inline-block;
+	margin-inline-start: 0.25em;
+} */
+
+/* New tab — overrides external when both apply */
+/* a[target='_blank']::after {
+	content: '\2B0F' / '';
+	display: inline-block;
+	margin-inline-start: 0.25em;
+} */
+
+
+
+
+
+
+
+
+body {
+	background-color: white;
+}

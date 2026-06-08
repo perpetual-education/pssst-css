@@ -1,9 +1,99 @@
-@layer preset;
+/*
+	preset.css — the kit's presetting layer.
 
-@import 'reset.css' layer(preset); 
-/* remove meddlesome user-agent-styles */
+	Contains the narrow reset (just what does real work in modern browsers)
+	plus the modern affordances Meyer can't include. We took Meyer apart
+	and kept only what still earns it. See meyer-reset.css for the full
+	Meyer reference with annotations on what we dropped and why.
+
+	Grouped by concern:
+	  Box model  — how elements are shaped (margin / padding / box-sizing)
+	  Type       — font and text behavior (incl. blockquote quote chars)
+	  Structure  — chrome on structural elements (fieldset, table)
+*/
+
+
+@import 'viewport.css';
+/* viewport interaction — scrollbar gutter, modal scroll lock, fragment-link landing */
+
+/* @import 'cursors.css'; */
+/*
+	Reset-adjacent module. Opt into pointer/not-allowed cursors on interactive
+	elements. Add your own reset-adjacent modules to styles/ and toggle them here.
+*/
+
+
+/* ===== Box model ===== */
+
+/* Padding and borders stay inside the declared size. */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+
+/* ===== Spacing and relationships ===== */
+
+/* Zero margins on flow elements — voice classes set rhythm explicitly. */
+html, body,
+h1, h2, h3, h4, h5, h6,
+p,
+blockquote, pre,
+dl, dt, dd, ol, ul,
+figure, figcaption,
+hr {
+	margin: 0;
+	padding: 0;
+}
+
+
+/* ===== Type ===== */
+
+/* Form controls don't inherit font / color by default — browsers ship them
+   with system defaults that visually disconnect from the page. */
+button,
+input,
+textarea,
+select {
+	font: inherit;
+	color: inherit;
+}
 
 /*
-	and you might want more specific resets
-	example: https://gist.github.com/murtaugh/5247154
+	Mobile browsers sometimes auto-inflate text on landscape rotation
+	or with desktop-formatted content - this prevents that. User zoom
+	(pinch, browser controls, OS text scaling) is unaffected.
 */
+html {
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+/* Drop browser auto-inserted quote marks on <q>/<blockquote> — authors
+   type curly quotes inline (survives style-stripping, RSS, reader view). */
+blockquote, q {
+	quotes: none;
+}
+blockquote::before, blockquote::after,
+q::before, q::after {
+	content: '';
+	content: none;
+}
+
+
+/* ===== Structure ===== */
+
+/* Fieldset's beveled border + padding aren't usually wanted. */
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+/* Collapsed borders by default. */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}

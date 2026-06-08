@@ -1,0 +1,47 @@
+/*
+	Controls — inputs, textareas, selects, focus rings.
+
+	"Controls" rather than "forms" because the same widgets show up outside
+	of forms (search bar in a header, standalone range slider, etc.). A
+	form is a specific use of controls.
+
+	Tokens declared at root (Mise-en-Mode pattern); override in any scope
+	(data-emphasis, data-mode, etc.) to retune the whole control system
+	without touching individual rules.
+
+	Opt-in. Sites that don't have interactive controls beyond browser
+	defaults can leave this off.
+
+	Buttons live in actions.css (a button is an action, not a control).
+*/
+
+:root {
+	--control-fill: var(--fill-primary);
+	--control-padding: 0.6em 0.8em;
+	--control-border: 1px solid var(--stroke-primary);
+	--control-radius: 0;
+
+	--control-focus-ring: 3px solid var(--accent);
+	--control-focus-offset: 2px;
+}
+
+
+/* Text-style form controls — checkboxes / radios excluded (sized by the browser). */
+
+:where(input, textarea, select):not([type='checkbox']):not([type='radio']) {
+	font: inherit;
+	padding: var(--control-padding);
+	border: var(--control-border);
+	border-radius: var(--control-radius);
+	background: var(--control-fill);
+	color: var(--ink-primary);
+
+	&:focus-visible {
+		outline: var(--control-focus-ring);
+		outline-offset: var(--control-focus-offset);
+	}
+
+	&:disabled {
+		background: var(--fill-secondary);
+	}
+}
