@@ -87,6 +87,66 @@
 } */
 
 
+/* ===== Future: iOS tap-highlight handling (belongs in preset or setup) ===== */
+
+/*
+	iOS Safari shows a translucent gray-blue flash on tap. Default is a
+	little crude. Two questions to settle before shipping:
+
+	  1. Remove entirely (-webkit-tap-highlight-color: transparent)
+	     → cleaner look, but lose tap feedback unless we add explicit
+	       :active / :focus-visible styles to compensate.
+	  2. Customize to brand color (e.g. accent at ~15% opacity)
+	     → keeps the feedback signal but matches the kit's identity.
+
+	Whichever we pick, the rule lives on the elements that get tapped:
+	a, button, label, summary, [role='button'], etc. Or universal on
+	html if we're confident about the choice across the kit.
+*/
+
+/* html {
+	-webkit-tap-highlight-color: transparent;
+} */
+
+
+/* ===== Future: text selection on clickable elements (belongs in setup or actions) ===== */
+
+/*
+	Buttons, summary elements, and other "click-shaped" things shouldn't
+	accidentally select on double-click (the blue text highlight reads as
+	"broken interaction" — janky on something that's supposed to be a
+	button). But blanket user-select: none on every clickable kills copy/paste
+	in edge cases where it matters.
+
+	Edge case to think through: FAQ accordion (<details><summary>).
+	  - Summary should NOT select on double-click (it's a button)
+	  - Content inside <details> SHOULD remain selectable (real prose)
+
+	The pattern works because user-select doesn't inherit aggressively —
+	apply :none to summary directly, and the body content inside details
+	keeps its default selectability.
+
+	Plus a .no-select / .allow-select utility pair for the cases where
+	the default doesn't fit (e.g. chrome that's selectable when it shouldn't be,
+	or copy-pasteable text inside a generally-non-selecting region).
+*/
+
+/* button,
+summary,
+[role='button'] {
+	user-select: none;
+	-webkit-user-select: none;
+} */
+
+/* .no-select {
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.allow-select {
+	user-select: text;
+	-webkit-user-select: text;
+} */
 
 
 
