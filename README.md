@@ -36,6 +36,8 @@ You can read @sheriffderek's thoughts <a href='https://css-tricks.com/on-type-pa
 
 Working on <a href='https://pssst-css.surge.sh/examples.html' target='_blank'>a page with some examples</a>, but we don't want to complicate the base idea... so, we will see.
 
+Wondering how this compares to Tailwind? <a href='https://pssst-css.surge.sh/tailwind-vs-tokens.html' target='_blank'>One component, two dialects, three contexts</a> — watch which card knows where it is.
+
 That's all for now.
 
 Take this all very seriously. Put your shrieks and grunts into issue form.

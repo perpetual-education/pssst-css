@@ -73,8 +73,15 @@ html {
 	--ink-auxiliary: color-mix(in oklch, var(--ink-primary) 45%, var(--fill-primary));
 
 	--stroke-primary: var(--color-stone-600);
+	--stroke-secondary: var(--color-stone-700);
+	--stroke-auxiliary: var(--color-stone-800);
 
 	--accent: var(--color-blue-300);
+
+	/* Alias tokens must be re-declared per scope: a custom property
+	   inherits as its RESOLVED value, so --link-color computed against
+	   root's --accent and won't see this scope's repaint on its own. */
+	--link-color: var(--accent);
 }
 
 /* Apply re-painted tokens at any element in a scope so its background

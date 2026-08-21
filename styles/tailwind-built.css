@@ -1,0 +1,135 @@
+/*
+	Real Tailwind, compiled — not hand-written, not a strawman.
+	Generated once with the official Tailwind CLI against this repo's
+	tailwind-vs-tokens.html (preflight off, @tailwind utilities only):
+
+		npx tailwindcss@3.4.17 -c tw.config.cjs -i tw-input.css -o tailwind-built.css
+
+	Why compiled instead of the Play CDN: the CDN build stamps ~50 --tw-*
+	custom properties on every element in the document (*, ::before,
+	::after) as plumbing for utilities this page never uses. Compiling
+	emits only the classes the markup references — the remaining --tw-*
+	vars below live on the utility classes themselves. Regenerate only if
+	the Tailwind card's classes change. Not a dependency.
+*/
+
+
+.mt-1 {
+  margin-top: 0.25rem
+}
+
+.mt-3 {
+  margin-top: 0.75rem
+}
+
+.block {
+  display: block
+}
+
+.inline-block {
+  display: inline-block
+}
+
+.w-full {
+  width: 100%
+}
+
+.max-w-sm {
+  max-width: 24rem
+}
+
+.overflow-hidden {
+  overflow: hidden
+}
+
+.rounded-lg {
+  border-radius: 0.5rem
+}
+
+.border {
+  border-width: 1px
+}
+
+.border-solid {
+  border-style: solid
+}
+
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1))
+}
+
+.border-gray-700 {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-border-opacity, 1))
+}
+
+.bg-gray-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1))
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1))
+}
+
+.p-4 {
+  padding: 1rem
+}
+
+.font-sans {
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem
+}
+
+.font-medium {
+  font-weight: 500
+}
+
+.font-semibold {
+  font-weight: 600
+}
+
+.text-blue-400 {
+  --tw-text-opacity: 1;
+  color: rgb(96 165 250 / var(--tw-text-opacity, 1))
+}
+
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity, 1))
+}
+
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity, 1))
+}
+
+.text-gray-50 {
+  --tw-text-opacity: 1;
+  color: rgb(249 250 251 / var(--tw-text-opacity, 1))
+}
+
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1))
+}
+
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity, 1))
+}
+
+.underline {
+  text-decoration-line: underline
+}

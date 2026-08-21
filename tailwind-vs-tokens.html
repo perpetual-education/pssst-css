@@ -1,0 +1,313 @@
+<!doctype html>
+
+<html lang='en' class='no-js'>
+
+	<head>
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+
+		<title>Tailwind vs tokens</title>
+		<meta name='description' content='One component, two dialects, three contexts. A card that knows where it is — and one that does not.'>
+
+		<link rel='stylesheet' href='styles/index.css'>
+		<link rel='stylesheet' href='styles/tailwind-vs-tokens.css'>
+
+		<!--
+			Real Tailwind, compiled once with the official CLI against this
+			page's markup (see the header in the file for the command and the
+			why). Preflight is off so the utilities can share this page with
+			the host stylesheet; two preflight defaults the card idiom relies
+			on (border-style: solid, the sans base font) are restored on the
+			cards with explicit utilities: border-solid, font-sans.
+		-->
+		<link rel='stylesheet' href='styles/tailwind-built.css'>
+	</head>
+
+
+	<body class='comparison-page'>
+		<header>
+			<inner-column>
+
+				<h1 class='loud-voice'>Tailwind vs tokens</h1>
+
+				<p class='calm-voice'>One component, written twice: once with semantic tokens (the PSSST way), once with real, idiomatic Tailwind — the way the docs and shadcn write it. Then we move both cards through the same contexts and watch what happens. Nothing here is a strawman; the Tailwind card is the card you'd actually write.</p>
+
+			</inner-column>
+		</header>
+
+
+		<main>
+
+			<!-- Band 1: the default context. Both cards look right. -->
+			<section>
+				<inner-column>
+
+					<h2 class='attention-voice'>1. The default page</h2>
+
+					<demo-pair>
+
+						<figure>
+
+							<figcaption class='label-voice'>Tokens</figcaption>
+
+							<show-preview>
+
+								<picture>
+									<img src='images/landscape.jpg' alt=''>
+								</picture>
+
+								<text-content>
+
+									<h3 class='strong-voice'>Coastal Loop</h3>
+
+									<p>Twelve miles of switchbacks and one very confused seagull.</p>
+
+									<a class='link quiet-voice' href='#'>Listen in</a>
+
+								</text-content>
+
+							</show-preview>
+
+						</figure>
+
+						<figure>
+
+							<figcaption class='label-voice'>Tailwind</figcaption>
+
+							<div class='max-w-sm overflow-hidden rounded-lg border border-solid border-gray-200 bg-white font-sans'>
+
+								<img class='w-full' src='images/landscape.jpg' alt=''>
+
+								<div class='p-4'>
+
+									<h3 class='text-lg font-semibold text-gray-900'>Coastal Loop</h3>
+
+									<p class='mt-1 text-sm text-gray-600'>Twelve miles of switchbacks and one very confused seagull.</p>
+
+									<a class='mt-3 inline-block text-sm font-medium text-blue-600 underline' href='#'>Listen in</a>
+
+								</div>
+
+							</div>
+
+						</figure>
+
+					</demo-pair>
+
+					<p class='band-note'>So far, no argument. Both cards look right, and the Tailwind one was probably faster to type. If pages never changed, this would be a tie.</p>
+
+				</inner-column>
+			</section>
+
+
+			<!-- Band 2: a scope repaint. Same two cards, markup untouched. -->
+			<section data-emphasis='focused'>
+				<inner-column>
+
+					<h2 class='attention-voice'>2. A focused section</h2>
+
+					<p class='calm-voice'>This band is <code>&lt;section data-emphasis='focused'&gt;</code> — one attribute. The kit repaints the token values for this scope (see <code>settings.css</code>). The two cards below are copy-pasted from band 1, byte for byte.</p>
+
+					<demo-pair>
+
+						<figure>
+
+							<figcaption class='label-voice'>Tokens</figcaption>
+
+							<show-preview>
+
+								<picture>
+									<img src='images/landscape.jpg' alt=''>
+								</picture>
+
+								<text-content>
+
+									<h3 class='strong-voice'>Coastal Loop</h3>
+
+									<p>Twelve miles of switchbacks and one very confused seagull.</p>
+
+									<a class='link quiet-voice' href='#'>Listen in</a>
+
+								</text-content>
+
+							</show-preview>
+
+						</figure>
+
+						<figure>
+
+							<figcaption class='label-voice'>Tailwind</figcaption>
+
+							<div class='max-w-sm overflow-hidden rounded-lg border border-solid border-gray-200 bg-white font-sans'>
+
+								<img class='w-full' src='images/landscape.jpg' alt=''>
+
+								<div class='p-4'>
+
+									<h3 class='text-lg font-semibold text-gray-900'>Coastal Loop</h3>
+
+									<p class='mt-1 text-sm text-gray-600'>Twelve miles of switchbacks and one very confused seagull.</p>
+
+									<a class='mt-3 inline-block text-sm font-medium text-blue-600 underline' href='#'>Listen in</a>
+
+								</div>
+
+							</div>
+
+						</figure>
+
+					</demo-pair>
+
+					<p class='band-note'>Nobody touched either card. One of them knew where it was. The token card reads its slots — <code>--fill-secondary</code>, <code>--ink-primary</code>, <code>--accent</code> — and the scope hands it new values. The Tailwind card's colors are welded to its markup, so it ignores its context and stays a white card from some other page.</p>
+
+				</inner-column>
+			</section>
+
+
+			<!-- Band 3: the fix — which is a fork. -->
+			<section data-emphasis='focused'>
+				<inner-column>
+
+					<h2 class='attention-voice'>3. The fix</h2>
+
+					<p class='calm-voice'>Here's the Tailwind card repaired for this context: every color class swapped by hand. The token card is here too — still the same markup it had in band 1.</p>
+
+					<demo-pair>
+
+						<figure>
+
+							<figcaption class='label-voice'>Tokens (still unchanged)</figcaption>
+
+							<show-preview>
+
+								<picture>
+									<img src='images/landscape.jpg' alt=''>
+								</picture>
+
+								<text-content>
+
+									<h3 class='strong-voice'>Coastal Loop</h3>
+
+									<p>Twelve miles of switchbacks and one very confused seagull.</p>
+
+									<a class='link quiet-voice' href='#'>Listen in</a>
+
+								</text-content>
+
+							</show-preview>
+
+						</figure>
+
+						<figure>
+
+							<figcaption class='label-voice'>Tailwind (forked)</figcaption>
+
+							<div class='max-w-sm overflow-hidden rounded-lg border border-solid border-gray-700 bg-gray-900 font-sans'>
+
+								<img class='w-full' src='images/landscape.jpg' alt=''>
+
+								<div class='p-4'>
+
+									<h3 class='text-lg font-semibold text-gray-50'>Coastal Loop</h3>
+
+									<p class='mt-1 text-sm text-gray-300'>Twelve miles of switchbacks and one very confused seagull.</p>
+
+									<a class='mt-3 inline-block text-sm font-medium text-blue-400 underline' href='#'>Listen in</a>
+
+								</div>
+
+							</div>
+
+						</figure>
+
+					</demo-pair>
+
+					<p class='band-note'>The fix works — and now there are two Tailwind cards. This one can never go back to band 1. Every context that can vary multiplies the markup: a second theme, a compact mode, a print style, each one is another hand-edited copy. (Tailwind's <code>dark:</code> variant doesn't escape this — it doubles the classes on every element instead, and only covers one axis.) The token card is still one card.</p>
+
+				</inner-column>
+			</section>
+
+
+			<!-- The receipts. -->
+			<section>
+				<inner-column>
+
+					<h2 class='attention-voice'>The receipts</h2>
+
+					<p class='calm-voice'>The complete cost of each approach, side by side.</p>
+
+					<receipt-block>
+
+						<h3 class='strong-voice'>Tokens: one component, written once</h3>
+
+						<pre class='data-voice'><code>&lt;show-preview&gt;
+	&lt;picture&gt;
+		&lt;img src='...' alt=''&gt;
+	&lt;/picture&gt;
+
+	&lt;text-content&gt;
+		&lt;h3 class='strong-voice'&gt;Coastal Loop&lt;/h3&gt;
+		&lt;p&gt;Twelve miles of switchbacks...&lt;/p&gt;
+		&lt;a class='link quiet-voice' href='#'&gt;Listen in&lt;/a&gt;
+	&lt;/text-content&gt;
+&lt;/show-preview&gt;
+
+/* the CSS — geometry and token slots, ~20 lines, written once */
+show-preview {
+	display: block;
+	max-width: 340px;
+	background-color: var(--fill-secondary);
+	border: 1px solid var(--stroke-secondary);
+	border-radius: 8px;
+	overflow: clip;
+
+	text-content { padding: 16px; }
+	p { margin-top: 6px; color: var(--ink-secondary); }
+	a { margin-top: 12px; }
+}</code></pre>
+
+					</receipt-block>
+
+					<receipt-block>
+
+						<h3 class='strong-voice'>Tailwind: 20 utilities per card, per context</h3>
+
+						<pre class='data-voice'><code>&lt;!-- band 1 --&gt;
+&lt;div class='max-w-sm overflow-hidden rounded-lg border border-solid border-gray-200 bg-white font-sans'&gt;
+	&lt;img class='w-full' src='...' alt=''&gt;
+	&lt;div class='p-4'&gt;
+		&lt;h3 class='text-lg font-semibold text-gray-900'&gt;Coastal Loop&lt;/h3&gt;
+		&lt;p class='mt-1 text-sm text-gray-600'&gt;Twelve miles of switchbacks...&lt;/p&gt;
+		&lt;a class='mt-3 inline-block text-sm font-medium text-blue-600 underline' href='#'&gt;Listen in&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- band 3: the same card again, re-decided by hand --&gt;
+&lt;div class='... border-gray-700 bg-gray-900'&gt;
+	...
+	&lt;h3 class='... text-gray-50'&gt;
+	&lt;p class='... text-gray-300'&gt;
+	&lt;a class='... text-blue-400'&gt;</code></pre>
+
+					</receipt-block>
+
+					<p class='band-note'>Now the change request every project eventually gets: <em>“rebrand the accent color.”</em> Token version: edit <code>--accent</code>, one line, every card in every context follows. Tailwind version: find every <code>text-blue-600</code> — and every <code>text-blue-400</code> in the forks — and decide, element by element, which ones meant <em>accent</em> and which ones just meant <em>blue</em>. The class name records the value but throws away the intent, and you can't grep for a design decision that was never named.</p>
+
+					<p class='band-note'>That's the whole argument. Tailwind constrains your values but not your choices; a design system is the opposite. Roughly 40 named tokens is the entire design surface here — small enough to hold in your head, small enough to repaint from above.</p>
+
+				</inner-column>
+			</section>
+
+		</main>
+
+
+		<footer>
+			<inner-column>
+
+				<p class='quiet-voice'><a class='link' href='index.html'>← PSSST (CSS)</a></p>
+
+			</inner-column>
+		</footer>
+	</body>
+
+</html>
