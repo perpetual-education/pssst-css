@@ -1,0 +1,402 @@
+<!doctype html>
+
+<html lang='en'>
+
+	<head>
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+
+		<title>The firewall lab</title>
+		<meta name='description' content='PSSST (CSS) — component boundaries on a hostile page'>
+
+		<link rel='stylesheet' href='legacy.css'>
+		<link rel='stylesheet' href='naive-table.css'>
+		<link rel='stylesheet' href='my-table.css'>
+		<link rel='stylesheet' href='site-tweaks.css'>
+	</head>
+
+
+	<body>
+		<main id='content'>
+
+			<header>
+				<h1>The firewall lab</h1>
+
+				<p>This page plays a legacy site — call it the <em>Riverbend Gazette</em>, last rewritten in 2009. Its stylesheet has unscoped element styles feeding wysiwyg tables, an <code>#content</code> template wrapper, and one <code>!important</code> from an old bug fix. Nothing is scoped, because that's the premise. Into this page we drop two component libraries: one that defends itself, one that doesn't.</p>
+
+				<p>The trick under test, from the web-component world:</p>
+
+				<pre>my-table:not(#_) :is(table, caption, colgroup, col, thead, tbody, tfoot, tr, th, td) {
+	all: revert;
+}</pre>
+
+				<p><code>:not(#_)</code> matches everything and donates an id of specificity — (1,0,2) with the descendant part, no <code>!important</code>. <code>all: revert</code> rolls every property back past the author origin to UA defaults. Together: a specificity floor that wipes the host page's styling off the component's parts, so the library can re-state what it actually wants just above it.</p>
+			</header>
+
+
+			<section>
+				<h2>1. Control: the site working as designed</h2>
+
+				<p>A wysiwyg table, styled by the legacy sheet. Yellow, dashed, uppercase, green — but this is <em>correct</em>. Editors have made hundreds of these. Any fix that breaks this table is not a fix.</p>
+
+				<table>
+					<caption>Farmers market — summer hours</caption>
+
+					<thead>
+						<tr>
+							<th>Day</th>
+
+							<th>Open</th>
+
+							<th>Close</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<td>Wednesday</td>
+
+							<td>3:00</td>
+
+							<td>7:00</td>
+						</tr>
+
+						<tr>
+							<td>Saturday</td>
+
+							<td>8:00</td>
+
+							<td>1:00</td>
+						</tr>
+
+						<tr>
+							<td>Sunday</td>
+
+							<td>9:00</td>
+
+							<td>2:00</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+
+			<section>
+				<h2>2. The leak: a component that didn't defend itself</h2>
+
+				<p><code>naive-table</code> styles its parts with element selectors — (0,0,2) at best. Look for: dashed side-borders around a solid bottom border (partial override), uppercase letterspaced headers (never declared, so legacy's shows), yellow stripes (legacy's <code>nth-child</code> is more specific), green text (legacy's <code>#content table td</code> beats everything element-level). What survives is decided by the legacy sheet's habits, not by the library.</p>
+
+				<naive-table>
+					<table>
+						<caption>Farmers market — summer hours</caption>
+
+						<thead>
+							<tr>
+								<th>Day</th>
+
+								<th>Open</th>
+
+								<th>Close</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr>
+								<td>Wednesday</td>
+
+								<td>3:00</td>
+
+								<td>7:00</td>
+							</tr>
+
+							<tr>
+								<td>Saturday</td>
+
+								<td>8:00</td>
+
+								<td>1:00</td>
+							</tr>
+
+							<tr>
+								<td>Sunday</td>
+
+								<td>9:00</td>
+
+								<td>2:00</td>
+							</tr>
+						</tbody>
+					</table>
+				</naive-table>
+			</section>
+
+
+			<section>
+				<h2>3. The firewall: same page, defended</h2>
+
+				<p><code>my-table</code> runs the firewall, then re-states its real styles above the floor, reading only its own tokens. The dashes, stripes, uppercase, and green are gone. Two things still show, both by design of the platform, not failure of the trick: the Gazette's Georgia (inheritance passes through — legacy's <code>table { font-size: 14px }</code> was <em>declared on</em> the table and is blocked, but <code>font-family</code> <em>inherits into</em> it from body and flows right through), and the red italic caption — see the next section.</p>
+
+				<my-table>
+					<table>
+						<caption>Farmers market — summer hours</caption>
+
+						<thead>
+							<tr>
+								<th>Day</th>
+
+								<th>Open</th>
+
+								<th>Close</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr>
+								<td>Wednesday</td>
+
+								<td>3:00</td>
+
+								<td>7:00</td>
+							</tr>
+
+							<tr>
+								<td>Saturday</td>
+
+								<td>8:00</td>
+
+								<td>1:00</td>
+							</tr>
+
+							<tr>
+								<td>Sunday</td>
+
+								<td>9:00</td>
+
+								<td>2:00</td>
+							</tr>
+						</tbody>
+					</table>
+				</my-table>
+			</section>
+
+
+			<section>
+				<h2>4. What beats the firewall — honestly</h2>
+
+				<p>Two defeats, both visible below. The caption is still red italic: legacy's <code>!important</code> wins against any specificity, and <code>revert</code> is not important. And the cells are purple, letterspaced, and italic: <code>site-tweaks.css</code> reaches in with <code>#late-zone my-table td</code> — it ties the floor at (1,0,2) and loads <em>after</em> the library, so it wins on order. The floor is a floor, not a ceiling. The library can raise it (<code>:not(#_#_)</code>), the site can climb again — that arms race is why the firewall is the last rung of the ladder, not the first.</p>
+
+				<div id='late-zone'>
+					<my-table>
+						<table>
+							<caption>Farmers market — summer hours</caption>
+
+							<thead>
+								<tr>
+									<th>Day</th>
+
+									<th>Open</th>
+
+									<th>Close</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr>
+									<td>Wednesday</td>
+
+									<td>3:00</td>
+
+									<td>7:00</td>
+								</tr>
+
+								<tr>
+									<td>Saturday</td>
+
+									<td>8:00</td>
+
+									<td>1:00</td>
+								</tr>
+
+								<tr>
+									<td>Sunday</td>
+
+									<td>9:00</td>
+
+									<td>2:00</td>
+								</tr>
+							</tbody>
+						</table>
+					</my-table>
+				</div>
+			</section>
+
+
+			<section>
+				<h2>5. The sanctioned doors: tokens and modes</h2>
+
+				<p>The firewall closes the selector door; the API stays open, because <code>all</code> doesn't touch custom properties. First table: the site repaints <code>--table-*</code> tokens on a wrapper (<code>.branded-zone</code> in site-tweaks.css) — no selector crosses the boundary, order doesn't matter, survives library updates. Second table: a <code>data-mode</code> attribute on the host element itself.</p>
+
+				<p>One footgun found building this page: the library's token <em>defaults</em> can't be declared on the host element, because a direct declaration beats anything inherited — the wrapper's repaint could never reach in. Defaults belong in the fallback slot of a private property: <code>--_fill-header: var(--table-fill-header, #232336)</code>, with the component consuming <code>--_fill-header</code>. Public property = the API; private property = resolved value; fallback = the default.</p>
+
+				<div class='branded-zone'>
+					<my-table>
+						<table>
+							<caption>Farmers market — summer hours</caption>
+
+							<thead>
+								<tr>
+									<th>Day</th>
+
+									<th>Open</th>
+
+									<th>Close</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr>
+									<td>Wednesday</td>
+
+									<td>3:00</td>
+
+									<td>7:00</td>
+								</tr>
+
+								<tr>
+									<td>Saturday</td>
+
+									<td>8:00</td>
+
+									<td>1:00</td>
+								</tr>
+
+								<tr>
+									<td>Sunday</td>
+
+									<td>9:00</td>
+
+									<td>2:00</td>
+								</tr>
+							</tbody>
+						</table>
+					</my-table>
+				</div>
+
+				<my-table data-mode='inverted'>
+					<table>
+						<caption>Farmers market — summer hours</caption>
+
+						<thead>
+							<tr>
+								<th>Day</th>
+
+								<th>Open</th>
+
+								<th>Close</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr>
+								<td>Wednesday</td>
+
+								<td>3:00</td>
+
+								<td>7:00</td>
+							</tr>
+
+							<tr>
+								<td>Saturday</td>
+
+								<td>8:00</td>
+
+								<td>1:00</td>
+							</tr>
+
+							<tr>
+								<td>Sunday</td>
+
+								<td>9:00</td>
+
+								<td>2:00</td>
+							</tr>
+						</tbody>
+					</table>
+				</my-table>
+			</section>
+
+
+			<section>
+				<h2>6. The inversion: legacy content inside the component</h2>
+
+				<p>The boundary cuts both ways, per <em>element</em>, not per subtree. The paragraph an editor pasted inside the component still wears the Gazette's styling — the firewall only names table parts. But the little table nested inside a cell gets captured and restyled as if it were the component's own: <code>:is()</code> can't tell whose table it is. If slotted foreign tables should keep their own look, the firewall needs a child-combinator leash, not a descendant net.</p>
+
+				<my-table>
+					<table>
+						<caption>Farmers market — summer hours</caption>
+
+						<thead>
+							<tr>
+								<th>Day</th>
+
+								<th>Open</th>
+
+								<th>Close</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr>
+								<td>Wednesday</td>
+
+								<td>3:00</td>
+
+								<td>7:00</td>
+							</tr>
+
+							<tr>
+								<td>
+									Sunday
+
+									<table>
+										<tbody>
+											<tr>
+												<td>note</td>
+
+												<td>closed on holidays</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+
+								<td>9:00</td>
+
+								<td>2:00</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<p>An editor pasted this paragraph into the component's slot. It still reads like the Gazette — the boundary is per-element, not per-subtree.</p>
+				</my-table>
+			</section>
+
+
+			<section>
+				<h2>7. The ladder</h2>
+
+				<p>Three ways out of this mess, best first:</p>
+
+				<ol>
+					<li><strong>Fix the scoping.</strong> The original sin is <code>table { }</code> where <code>.prose table { }</code> belonged. Best fix, rarely affordable — it means auditing every template that emits wysiwyg content.</li>
+
+					<li><strong>Layer the legacy sheet.</strong> If you own the page: <code>@import url('legacy.css') layer(legacy);</code> — one line, no selector edited. Layered loses to unlayered regardless of specificity, so the component wins everywhere and the wysiwyg areas render exactly as before. No firewall needed at all.</li>
+
+					<li><strong>The firewall.</strong> When you own nothing but your own stylesheet. It holds against everything below its floor, and loses — honestly, visibly — to <code>!important</code> and to later-loading rules at or above the floor.</li>
+				</ol>
+
+				<p>On every rung the exposed styling API stays the same: tokens and host attributes, never selectors. The escape hatches differ; the contract doesn't have to.</p>
+			</section>
+
+		</main>
+	</body>
+
+</html>

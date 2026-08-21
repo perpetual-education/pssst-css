@@ -1,0 +1,34 @@
+/*
+	naive-table.css — a component library that didn't defend itself.
+
+	Element-level selectors, (0,0,2) at best. The legacy sheet walks
+	through every gap: anything the library doesn't declare shows the
+	Gazette's value, and anything the Gazette declares with more
+	specificity (its nth-child stripes, its #content rule) wins
+	outright. What survives is decided by the legacy sheet's habits,
+	not by the library.
+*/
+
+naive-table {
+	display: block;
+	margin: 24px 0;
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		background: #ffffff;
+		color: #232336;
+	}
+
+	th {
+		padding: 8px 12px;
+		background: #232336;
+		color: #ffffff;
+		text-align: left;
+	}
+
+	td {
+		padding: 8px 12px;
+		border-bottom: 1px solid #d8d8e2;
+	}
+}

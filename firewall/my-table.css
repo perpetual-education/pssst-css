@@ -1,0 +1,93 @@
+/*
+	my-table.css — the component library that defends itself.
+
+	The contract, same as shadow DOM's, rebuilt in light DOM:
+	selectors don't cross the boundary; custom properties do.
+
+	Autonomous custom element, no JS. One firewall rule, then
+	everything the component wants re-stated above the floor,
+	reading tokens only.
+*/
+
+my-table {
+	display: block;
+	margin: 24px 0;
+
+	/* The styling API is the public --table-* properties. Repaint them
+	   from any scope above the host — custom properties are excluded
+	   from `all`, so they pass the firewall by design. Selectors never
+	   will.
+
+	   The defaults route through private --_* properties instead of
+	   being declared on the host directly, because a default declared
+	   ON the host is a direct declaration — it beats anything inherited,
+	   so a wrapper's repaint could never reach in. The fallback slot is
+	   where a library's defaults belong. */
+	--_fill: var(--table-fill, #ffffff);
+	--_fill-header: var(--table-fill-header, #232336);
+	--_fill-stripe: var(--table-fill-stripe, #f2f2f7);
+	--_ink: var(--table-ink, #232336);
+	--_ink-header: var(--table-ink-header, #ffffff);
+	--_stroke: var(--table-stroke, #d8d8e2);
+}
+
+/*
+	The firewall. :not(#_) matches everything and donates an id of
+	specificity, so every rule in this block lands at (1,0,2) or higher
+	— no !important involved. all: revert rolls every property back
+	past the author origin to UA defaults, wiping the host page's
+	unscoped table styling off.
+
+	Two things pass anyway, per spec, both on purpose:
+	  - inherited values (the page's font still flows in unless the
+	    component blocks it with a declaration of its own)
+	  - custom properties (`all` doesn't touch them — the API stays open)
+*/
+my-table:not(#_) {
+	:is(table, caption, colgroup, col, thead, tbody, tfoot, tr, th, td) {
+		all: revert;
+	}
+
+	/* Re-statement — same floor, later in source, so it wins the tie
+	   against the firewall itself. Only tokens past this line. */
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		background: var(--_fill);
+		color: var(--_ink);
+	}
+
+	caption {
+		padding: 8px 0;
+		text-align: left;
+		color: var(--_ink);
+	}
+
+	th {
+		padding: 8px 12px;
+		background: var(--_fill-header);
+		color: var(--_ink-header);
+		text-align: left;
+	}
+
+	td {
+		padding: 8px 12px;
+		border-bottom: 1px solid var(--_stroke);
+	}
+
+	tbody tr:nth-child(even) td {
+		background: var(--_fill-stripe);
+	}
+}
+
+/* Host modes — the other sanctioned door. Attributes on the element
+   the consumer already owns; no selector ever reaches inside. */
+my-table[data-mode='inverted'] {
+	--table-fill: #232336;
+	--table-fill-header: #0d0d16;
+	--table-fill-stripe: #2c2c42;
+	--table-ink: #f2f2f7;
+	--table-ink-header: #f2f2f7;
+	--table-stroke: #3a3a52;
+}
