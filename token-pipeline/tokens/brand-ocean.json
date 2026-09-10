@@ -1,0 +1,9 @@
+{
+	"ramp": {
+		"50":  { "$type": "color", "$value": "oklch(97% 0.014 254.604)" },
+		"100": { "$type": "color", "$value": "oklch(93.2% 0.032 255.585)" },
+		"200": { "$type": "color", "$value": "oklch(88.2% 0.059 254.128)" },
+		"800": { "$type": "color", "$value": "oklch(42.4% 0.199 265.638)" },
+		"900": { "$type": "color", "$value": "oklch(37.9% 0.146 265.522)" }
+	}
+}
