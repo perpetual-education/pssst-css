@@ -112,6 +112,43 @@ CSS" celebrity list externally; the list exists internally for context only.
          already correct? Relates to spacing-vs-figma.md.
     Rejected: his heading-cue hierarchy (voices dissolve that problem),
     the h6 weight-drop trick.
+  - Per-typeface calibration, from PE (2026-09-22) — a candidate for
+    font-scales.css, to consider as a universal tool, not to adopt yet:
+      The finding: a typeface arrives with metrics the system didn't
+      choose, and the system should compensate ONCE, beside the font
+      primitive — never in a voice or a component. --type-anchor is the
+      first member (apparent size). PE added a second: an optical left
+      edge, --font-sans-inset / --font-serif-inset (the face's H-stem
+      side bearing as a negative em, e.g. -0.05em for Neue Montreal),
+      consumed by display voices as margin-inline-start so big headings
+      sit flush with the column edge instead of indented by side bearing.
+      The shape that held up in use, after two wrong tries:
+        - three owners: the FONT says how much (primitive), the VOICE
+          says whether it shows (only display voices consume it — at
+          sub-display sizes it's sub-pixel AND those voices land on
+          spans/legends/summaries), the SCOPE says whether it applies
+          (a centered scope sets the pointer to 0 — the ink/fill slot
+          move applied to alignment).
+        - the role token (--font-heading-inset) is only a pointer to the
+          active face's primitive; re-point it wherever --font-heading
+          is reassigned. Font-attached, not role-attached: PE's first
+          try was role-attached and a serif-overridden h1 got the sans
+          number.
+        - margin, not transform/text-indent: indent misses wrapped
+          lines; transform lies to layout, creates a stacking context,
+          and GSAP overwrites it. Checked in the browser, no rendering
+          difference.
+        - margins on one element never add, so a component's margin:0
+          silently cancels it (write margin-block there).
+        - no native CSS for this (csswg-drafts #5466, open since 2020;
+          text-box-trim is block-axis only) — keep consumption in one
+          place so an @supports swap is one block if it ever ships.
+      Source of truth: the token comment in PE's styles/typography.css
+      and docs/architecture/typography.md. Open before distilling: is
+      this a kit-level concern (the "READ ME!!!" caveat applies — one-
+      font projects may not want the layer), and should --type-anchor
+      then move from the scale block to sit beside the primitives too,
+      as one "calibration" block per face.
   - README catch-up (most public-facing artifact; needs updating)
   - Demo content cleanup (site.css, examples.html, index.html, root modules/)
   - developer-styles.css final position
