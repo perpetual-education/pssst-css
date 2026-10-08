@@ -1,0 +1,99 @@
+/*
+	legacy.css — "The Riverbend Gazette", last full rewrite 2009.
+
+	This file plays the legacy site. Every rule is a real-world type:
+	unscoped element styles feeding wysiwyg output, an #id template
+	wrapper, one !important left over from an old bug fix. Nothing
+	is scoped, because that's the premise.
+*/
+
+body {
+	margin: 0;
+	background: #f4f1ea;
+	color: #3b3630;
+	font-family: Georgia, 'Times New Roman', serif;
+	line-height: 1.5;
+}
+
+#content {
+	max-width: 760px;
+	margin: 0 auto;
+	padding: 20px 20px 100px;
+}
+
+h1,
+h2 {
+	font-weight: normal;
+	color: #1f1c18;
+}
+
+h1 {
+	font-size: 34px;
+	border-bottom: 3px double #b5aa98;
+	padding-bottom: 8px;
+}
+
+h2 {
+	font-size: 24px;
+	margin-top: 64px;
+	border-bottom: 1px solid #d6cdbd;
+	padding-bottom: 4px;
+}
+
+a {
+	color: #7a5230;
+}
+
+pre {
+	background: #efe9dc;
+	border: 1px solid #d6cdbd;
+	padding: 12px 16px;
+	font-size: 13px;
+	overflow-x: auto;
+}
+
+
+/*
+	The wysiwyg table styles — the reason this lab exists.
+	Unscoped, so they hit every table on the site, including
+	the ones inside somebody's shiny new component.
+*/
+
+table {
+	width: auto;
+	border: 3px double #9a9a9a;
+	border-collapse: separate;
+	border-spacing: 2px;
+	background: #fffbe6;
+	font-size: 14px;
+}
+
+caption {
+	font-variant: small-caps;
+	letter-spacing: 1px;
+	color: #b00020 !important; /* bug ticket #341, 2011. do not remove */
+	font-style: italic !important;
+}
+
+th,
+td {
+	border: 1px dashed #b08c5a;
+	padding: 3px 14px;
+}
+
+th {
+	background: #ffe08a;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 12px;
+}
+
+tr:nth-child(odd) td {
+	background: #fdf6d8;
+}
+
+/* the template wrapper strikes: an id makes this (1,0,2) —
+   more specific than any element-only component selector */
+#content table td {
+	color: #2a6f2a;
+}

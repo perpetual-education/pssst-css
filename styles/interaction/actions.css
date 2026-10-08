@@ -1,0 +1,139 @@
+/*
+	Actions — buttons, links-as-buttons, anything that performs an action.
+
+	Element-agnostic featured action pattern: add [data-action='featured']
+	to any clickable, and it gets the loud-rectangle treatment from the
+	action band tokens. Each element keeps its own identity tells (links
+	preserve underline, summary hides its disclosure marker, etc.) via
+	the rules below.
+
+	Tokens follow the Mise-en-Mode tri-band pattern: primary / secondary /
+	auxiliary. Only the primary tier ships here. Secondary and auxiliary
+	get filled in when a project hits the need (slot exists; values added
+	on demand — emergent, not prescribed).
+
+	Scope re-painting: any ancestor scope that reassigns --action-fill-primary
+	etc. re-paints all featured actions inside it without touching their CSS.
+
+	Opt-in. Projects with their own button system can leave this off.
+*/
+
+:root {
+	/* Featured action — loud, primary CTA */
+	--action-fill-primary: var(--ink-primary);
+	--action-ink-primary: var(--fill-primary);
+	--action-stroke-primary: transparent;
+	--action-radius-primary: 4px;
+
+	/* Secondary tier — declare when there's a real use case. */
+	/* --action-fill-secondary: ... ; */
+	/* --action-ink-secondary: ... ; */
+	/* --action-stroke-secondary: ... ; */
+	/* --action-radius-secondary: ... ; */
+
+	/* Auxiliary tier — declare when there's a real use case. */
+	/* --action-fill-auxiliary: ... ; */
+	/* --action-ink-auxiliary: ... ; */
+	/* --action-stroke-auxiliary: ... ; */
+	/* --action-radius-auxiliary: ... ; */
+}
+
+
+/* Baseline button — consistent font / cursor across browsers, minimal chrome.
+   The kit's opinion: buttons inherit text styling, get a hairline border,
+   announce themselves as clickable. Featured CTAs use [data-action]. */
+
+button {
+	font: inherit;
+	color: inherit;
+	background: transparent;
+	border: 1px solid currentColor;
+	border-radius: 4px;
+	padding: 0.3em 0.8em;
+	cursor: pointer;
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+
+/* Featured action — element-agnostic loud CTA. Works on any clickable.
+   Reads the action band tokens; re-paints when any scope re-paints them. */
+
+[data-action='featured'] {
+	display: inline-block;
+	background: var(--action-fill-primary);
+	color: var(--action-ink-primary);
+	border: 1px solid var(--action-stroke-primary);
+	border-radius: var(--action-radius-primary);
+	padding: 0.5em 1em;
+	cursor: pointer;
+	text-decoration: none;
+	user-select: none;
+	font: inherit;
+
+	&:hover {
+		opacity: 0.9;
+	}
+
+	&:active {
+		transform: scale(0.98);
+	}
+
+	&:focus-visible {
+		outline: var(--control-focus-ring, 3px solid var(--accent));
+		outline-offset: var(--control-focus-offset, 2px);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+
+/* Link tell — underline survives the loud treatment so it still reads
+   as a link, not just a rectangle. */
+
+a[data-action='featured'] {
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+
+/* Summary tell — kill the default disclosure marker so the loud rectangle
+   reads as a button, not a list-item-ish thing. */
+
+summary[data-action='featured'] {
+	list-style: none;
+}
+
+summary[data-action='featured']::-webkit-details-marker {
+	display: none;
+}
+
+
+/* Reveal-once — once expanded, the summary steps aside so the revealed
+   content reads cleanly. */
+
+details[open] > summary[data-action='featured'] {
+	display: none;
+}
+
+
+/* Escape hatch — strip all chrome. For icon buttons, close-X buttons,
+   anything that needs to render bare without the kit's button treatment. */
+
+button.unstyled,
+a.unstyled {
+	background: none;
+	border: none;
+	padding: 0;
+	box-shadow: none;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+	text-decoration: none;
+}

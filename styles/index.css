@@ -1,0 +1,49 @@
+
+/* P */
+@import 'preset.css';
+
+/* S */
+@import 'setup.css';
+
+/* raw inventory — font scales loaded first (type is the more fundamental
+   identity layer; color is painted on top). Settings picks from both. */
+@import 'font-scales.css';
+@import 'color-scales.css';
+
+/* S */
+@import 'settings.css';
+
+/* S */
+@import 'structure.css';
+
+/* T */
+@import 'typography.css';
+
+
+/* Interactive — opt-in. Sites that have interactive controls or
+   action-style CTAs turn these on. Content-and-links-only sites leave
+   them off. Controls = inputs/textareas/selects. Actions = buttons + CTAs. */
+/* @import 'interaction/controls.css'; */
+/* @import 'interaction/actions.css'; */
+
+
+/* C */
+@import 'components.css';
+
+/* S */
+@import 'modules.css';
+
+
+/* Scratch — last; overrides anything above. Holding area for things in
+   transit. Walk it regularly; empty is the goal. */
+@import 'scratch.css';
+
+/* S */
+
+
+
+
+
+
+
+

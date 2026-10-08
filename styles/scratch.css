@@ -1,0 +1,228 @@
+/*
+	scratch.css — the holding area.
+
+	Loaded last from index.css so anything here overrides what's above it.
+	Use this for:
+	  - Things in transit (moved out of one file, not yet placed in another)
+	  - Things you're trying out before deciding where they belong
+	  - Quick overrides while building
+
+	Walk this regularly. Empty is the goal. Don't let it accumulate.
+*/
+
+
+/* ===== In transit: belong in settings.css when settings gets a motion section ===== */
+
+/*
+	interpolate-size — controls whether CSS can animate to and from keyword
+	values like 'auto', 'min-content', 'max-content', 'fit-content'.
+
+	  numeric-only    (default)  transitions to 'auto' snap, no animation.
+	  allow-keywords             transitions to 'auto' animate smoothly.
+
+	Turning this on enables CSS-only height animations for accordions, drawers,
+	and expand/collapse — the long-standing "can't animate to auto" papercut.
+
+	Gated by prefers-reduced-motion so motion-sensitive users automatically
+	get the default snap behavior.
+*/
+
+/* :root {
+	@media (prefers-reduced-motion: no-preference) {
+		interpolate-size: allow-keywords;
+	}
+} */
+
+
+/* ===== In transit: belong in settings.css colocated with scheme/dark-mode ===== */
+
+/*
+	color-scheme — tells the browser which color schemes the page is designed
+	to support. Affects browser-drawn UI:
+
+	  - native form controls (<select>, checkboxes, date pickers)
+	  - scrollbar
+	  - default text selection color
+	  - autofill background
+
+	  light dark   — render native UI to match the OS preference.
+	  light        — render native UI in light, regardless of OS.
+
+	Default (no rule) is 'light'. Enable 'light dark' when your site actually
+	supports dark mode; otherwise dark-mode users see dark scrollbars and
+	dark <select> dropdowns on a light page.
+*/
+
+/* html {
+	color-scheme: light dark;
+} */
+
+
+/* ===== Future: contextual link indicators (belongs in setup.css near link rules) ===== */
+
+/*
+	A link is a promise about what happens when you click it. The usability
+	job is to plan the tell for every situation — so nobody is surprised by
+	where they end up. The situations to plan for:
+
+	  same-site page      the baseline; gets no extra tell
+	  same-page fragment  jumps, doesn't navigate (pairs with :target
+	                      scroll-margin in viewport.css)
+	  off-site            leaves here for somewhere else
+	  new tab             leaves you with two windows
+	  mailto: / tel:      launches an app, not a page
+	  download            gives you a file instead of a place
+	  visited             been there already (the oldest tell in the book)
+	  current page/place  aria-current in nav — "you are here"
+
+	And the boundary: if it DOES something instead of GOING somewhere,
+	it's a button, not a link — that's an element choice, not a tell.
+
+	Each situation gets a deliberate decision: a glyph, a color, an
+	announcement, or deliberately nothing. The default (same-site) is the
+	baseline the others deviate from. One recipe covers the glyph-style
+	tells:
+
+	  1. Read the context from attributes the markup already has —
+	     a[href^='http'], a[target='_blank'], a[href^='mailto:'],
+	     a[href$='.pdf'], a[download]. No classes; the context is
+	     already in the markup.
+
+	  2. Indicator as ::after generated content, two-value syntax:
+	     content: '\00A0\2192' / '' — visual only, silent for screen
+	     readers. Put a real string after the / when it should announce
+	     instead (e.g. / ' (opens in new tab)').
+
+	  3. Glue, don't float (learned in PE): the leading no-break space
+	     ties the arrow to the link's last word. The display: inline-block
+	     + margin version makes an atomic inline — a soft-wrap opportunity —
+	     so the arrow can orphan onto its own line. Tradeoff of staying
+	     inline: the underline runs under the arrow too.
+
+	  4. Exclude your own domain(s) in the off-site selector, and let the
+	     more specific context win when two apply (new tab beats external).
+
+	External (off-site): →
+	New tab:             ⬏
+*/
+
+/* External (off-site, http(s) but not our own domain) */
+/* a[href^='http']:not([href*='YOUR-DOMAIN.com'])::after {
+	content: '\00A0\2192' / '';
+} */
+
+/* New tab — overrides external when both apply */
+/* a[target='_blank']::after {
+	content: '\00A0\2B0F' / '';
+} */
+
+
+/* ===== Future: iOS tap-highlight handling (belongs in preset or setup) ===== */
+
+/*
+	iOS Safari shows a translucent gray-blue flash on tap. Default is a
+	little crude. Two questions to settle before shipping:
+
+	  1. Remove entirely (-webkit-tap-highlight-color: transparent)
+	     → cleaner look, but lose tap feedback unless we add explicit
+	       :active / :focus-visible styles to compensate.
+	  2. Customize to brand color (e.g. accent at ~15% opacity)
+	     → keeps the feedback signal but matches the kit's identity.
+
+	Whichever we pick, the rule lives on the elements that get tapped:
+	a, button, label, summary, [role='button'], etc. Or universal on
+	html if we're confident about the choice across the kit.
+*/
+
+/* html {
+	-webkit-tap-highlight-color: transparent;
+} */
+
+
+/* ===== Future: text selection on clickable elements (belongs in setup or actions) ===== */
+
+/*
+	Buttons, summary elements, and other "click-shaped" things shouldn't
+	accidentally select on double-click (the blue text highlight reads as
+	"broken interaction" — janky on something that's supposed to be a
+	button). But blanket user-select: none on every clickable kills copy/paste
+	in edge cases where it matters.
+
+	Edge case to think through: FAQ accordion (<details><summary>).
+	  - Summary should NOT select on double-click (it's a button)
+	  - Content inside <details> SHOULD remain selectable (real prose)
+
+	The pattern works because user-select doesn't inherit aggressively —
+	apply :none to summary directly, and the body content inside details
+	keeps its default selectability.
+
+	Plus a .no-select / .allow-select utility pair for the cases where
+	the default doesn't fit (e.g. chrome that's selectable when it shouldn't be,
+	or copy-pasteable text inside a generally-non-selecting region).
+*/
+
+/* button,
+summary,
+[role='button'] {
+	user-select: none;
+	-webkit-user-select: none;
+} */
+
+/* .no-select {
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+.allow-select {
+	user-select: text;
+	-webkit-user-select: text;
+} */
+
+
+/* ===== Future: safe-area insets (belongs in viewport.css) ===== */
+
+/*
+	env(safe-area-inset-*) — pad content back out of the notch and
+	home-bar zones on phones. Two things the tip-post version skips:
+
+	  1. The values are all 0 until the meta viewport opts in:
+	       <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
+	     Without viewport-fit=cover the browser letterboxes the page inside
+	     the safe area for you (bars in landscape) and env() does nothing.
+	     So this is opt-in: you're choosing to draw under the hardware,
+	     then padding the content back out.
+
+	  2. The two-line "fallback" pattern
+	       padding-bottom: 48px;
+	       padding-bottom: env(safe-area-inset-bottom);
+	     replaces the design spacing instead of adding to it — the inset is
+	     ~34px on a notched iPhone and 0 everywhere else, so the 48px
+	     vanishes exactly where breathing room was wanted. The honest
+	     patterns:
+	       calc(1rem + env(safe-area-inset-bottom))   spacing PLUS inset
+	       max(1rem, env(safe-area-inset-bottom))     whichever is bigger
+
+	Landscape puts the hardware on the inline sides — left/right insets
+	exist for that.
+
+	Where it matters: fixed/sticky bottom bars, full-bleed backgrounds,
+	PWAs. A normal scrolling page that never sets viewport-fit=cover
+	doesn't need any of it.
+
+	Kit-shaped question to settle: expose as settings tokens
+	(--safe-bottom: env(safe-area-inset-bottom, 0px), etc.) so components
+	consume a slot instead of scattering raw env() calls.
+*/
+
+/* .example-bottom-bar {
+	padding-bottom: max(1rem, env(safe-area-inset-bottom));
+} */
+
+
+
+
+
+
+body {
+	background-color: white;
+}

@@ -12,19 +12,31 @@ A CSS methodology so great, it needed a name... ;)
 
 This is meant to be downloaded as a one-off to get your project started. It contains styles and structures to help scaffold your ideas. It is not an updatable dependency.
 
-## Some explanation?
+## Rationale
 
-(maybe control click to open in a new window - since markdown doesn't set a target - and we aren't going to rewrite these links in HTML right now)
+<ul>
+	<li>
+		<a href='https://codepen.io/perpetual-education/pen/podGxpy?editors=1100' target='_blank'>inner-column discussion</a>
+	</li>
+	<li>
+		<a href='https://codepen.io/perpetual-education/pen/abpRdjJ?editors=1100' target='_blank'>inner-column with modules</a>
+	</li>
+	<li>
+		<a href='https://codepen.io/perpetual-education/pen/abWBYeL?editors=1100' target='_blank'>site structure with main</a>
+	</li>
+	<li>
+		<a href='https://codepen.io/perpetual-education/pen/QWpdQxy?editors=1100' target='_blank'>theming module in context: part 1</a>
+	</li>
+	<li>
+		<a href='https://codepen.io/perpetual-education/pen/GRmQXge?editors=1100' target='_blank'>theming modules in context: part 2</a>
+	</li>
+</ul>
 
-* [inner-column discussion](https://codepen.io/perpetual-education/pen/podGxpy?editors=1100)
-* [inner-column with modules](https://codepen.io/perpetual-education/pen/abpRdjJ?editors=1100)
-* [site structure with main](https://codepen.io/perpetual-education/pen/abWBYeL?editors=1100)
-* [theming modules in context: part 1](https://codepen.io/perpetual-education/pen/QWpdQxy?editors=1100)
-* [theming modules in context: part 2](https://codepen.io/perpetual-education/pen/GRmQXge?editors=1100)
+You can read @sheriffderek's thoughts <a href='https://css-tricks.com/on-type-patterns-and-style-guides/' target='_blank'>on type-patterns and style guides</a> on CSS Tricks.
 
-You can read @sheriffderek's thoughts [on type-patterns and style guides](https://css-tricks.com/on-type-patterns-and-style-guides/) on CSS Tricks.
+Working on <a href='https://pssst-css.surge.sh/examples.html' target='_blank'>a page with some examples</a>, but we don't want to complicate the base idea... so, we will see.
 
-Working on [a page with some examples](https://pssst-css.surge.sh/examples.html), but we don't want to complicate the base idea... so, we will see.
+Wondering how this compares to Tailwind? <a href='https://pssst-css.surge.sh/tailwind-vs-tokens.html' target='_blank'>One component, two dialects, three contexts</a> — watch which card knows where it is.
 
 That's all for now.
 

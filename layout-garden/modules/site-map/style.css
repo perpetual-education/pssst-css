@@ -1,8 +1,9 @@
-
 site-map {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: 20px;
+
+	padding-bottom: 10vh;
 
 	ul {
 		margin-top: 20px;

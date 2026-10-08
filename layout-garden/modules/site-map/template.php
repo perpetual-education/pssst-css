@@ -48,9 +48,3 @@
 		</ul>
 	</nav>
 </site-map>
-
-<style>
-	site-map {
-		padding-bottom: 10vh;
-	}
-</style>

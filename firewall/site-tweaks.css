@@ -1,0 +1,26 @@
+/*
+	site-tweaks.css — the legacy site's own additions, loaded after
+	the component library. Two moves: one sanctioned, one not.
+*/
+
+/* Sanctioned: repaint the API from a scope above. No selector crosses
+   the boundary, load order doesn't matter, and it survives library
+   updates — the tokens ARE the contract. */
+.branded-zone {
+	--table-fill-header: #5c1f1f;
+	--table-fill-stripe: #f7efe9;
+	--table-stroke: #d8c8bc;
+}
+
+/* Unsanctioned: a selector reach-in. And it works — it ties the
+   firewall's (1,0,2) floor and loads later, so it wins on order.
+   That's the honest limit of the trick: the floor is a floor, not a
+   ceiling. The library could raise it (:not(#_#_)), the site could
+   climb again — that arms race is why the firewall is the LAST rung
+   of the ladder, not the first. This rule is also exactly the kind
+   of thing that breaks on the next library update. */
+#late-zone my-table td {
+	color: #7a2a7a;
+	letter-spacing: 2px;
+	font-style: italic;
+}

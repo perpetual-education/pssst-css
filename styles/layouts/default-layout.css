@@ -1,0 +1,62 @@
+/*
+	Default site layout — the common shape: sticky footer, centered content
+	column, sticky header. Goes together as one layout decision. Replace
+	this whole file or swap in a different layout from layouts/ to use a
+	different shape.
+*/
+
+
+/* ===== Sticky footer ===== */
+/*
+	Body is a flex column with full viewport min-height; main grows to fill
+	remaining space. Footer drops to the bottom on short pages and falls
+	below content naturally on long pages.
+*/
+
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	/* be at least a full viewport height; consider 100svh and 100dvh too */
+}
+
+main {
+	flex-grow: 1;
+	/* fill up available space which pushes the footer down */
+}
+
+
+/* ===== Centered content column ===== */
+/*
+	Wraps content to a readable max-width, centers it horizontally, applies
+	iOS-aligned inline padding. Acts as a container query context so
+	children can respond to its width.
+*/
+
+inner-column {
+	display: block;
+	max-width: var(--inner-column-max, 1100px);
+	margin-inline: auto;
+
+	padding: var(--inner-column-padding-block, 30px) var(--inner-column-padding-inline, 16px);
+	/*
+		16px inline default aligns with iOS safe-area conventions and common
+		framework gutters — kept as fixed px so it doesn't scale with root
+		font-size. Project overrides via the variables in settings.
+	*/
+
+	container-type: inline-size;
+}
+
+
+/* ===== Sticky site header ===== */
+/*
+	The common pattern, on by default. Override in project styles if your
+	project wants a different header behavior (static, hidden-on-scroll, etc.).
+*/
+
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+}

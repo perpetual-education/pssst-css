@@ -1,38 +1,98 @@
-/*@import 'developer-styles.css';*/
+/*
+	The kit's semantic tokens - picked from color.css, named by their role
+	in the hierarchy (primary / secondary / auxiliary), painted on top of
+	the paper/ink/stroke metaphor.
 
+	Why primary/secondary/auxiliary (not strong/weak, not 100/200/300):
+	the names describe POSITION in the hierarchy, not appearance. So when
+	a scope re-paints the palette (data-emphasis, data-tone, data-palette),
+	the same token names still mean the same thing — the values change but
+	the relationships stay. Components don't have to know which scope they're
+	in; they just consume their slot.
+
+	Scope re-painting via data-* attributes is the data-theme nesting or Mise-en-Mode pattern:
+	a section "placed in mode" receives new values for the same tokens.
+	One example below (data-emphasis='focused'); add your own modes as
+	your project needs them. If the project is simple, you might just need a few modes. 
+	If it a complex show piece for design systems like the PE site, well 
+	- we have may many layers and axis that work together and compose the whole
+*/
+
+:root {
+	/* Surfaces */
+	--fill-primary: var(--color-stone-50);
+	--fill-secondary: var(--color-stone-100);
+	--fill-auxiliary: var(--color-stone-200);
+
+	/* Marks */
+	--ink-primary: var(--color-stone-900);
+	--ink-secondary: color-mix(in oklch, var(--ink-primary) 66%, var(--fill-primary));
+	--ink-auxiliary: color-mix(in oklch, var(--ink-primary) 45%, var(--fill-primary));
+	/* not totally sold on the color-mix here vs just choosing a color - but let's play with it */
+
+	/* Lines */
+	--stroke-primary: var(--color-stone-400);
+	--stroke-secondary: var(--color-stone-300);
+	--stroke-auxiliary: var(--color-stone-200);
+	/* it seems like lines are "ink" too... but it depends on your project */
+
+	/* Interactive */
+	--accent: var(--color-blue-600);
+
+	/* Slots downstream files reference with fallbacks */
+	--link-color: var(--accent);
+
+
+	/* so, if we're thinking about controls forms being opt-in / layered - 
+	then maybe we have many things imported into this file 
+
+	This is the core "theme" ? or pallete? or what? because it has more than just color. But maybe there's color - and there's shape too
+	*/
+}
+
+
+/* Apply the resolved tokens at the document root */
 html {
-	--black: #111111;
 	--white: #efefef;
-
-	--neutral-stuffs: gray;
-
-	--color: hsla(206, 66%, 77%, 1.00);
-	--highlight: hsla(190, 90%, 60%, 1.00);
-
-	--shadow: rgba(0,0,0,.8);
-
-	--corners: 10px; /* or whatevers */
-
-	--paper: hsla(209, 90%, 50%, 1.00); /*shadier dodgerblue*/
 	--ink: var(--white);
+	background-color: var(--fill-primary);
+	color: var(--ink-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-	html {
-		--black: #111111;
-		--white: #efefef;
 
-		--neutral-stuffs: gray;
+/*
+	Example scope re-paint. Same a/b/c roles, different values.
+	Components inside this scope just keep consuming --fill-primary,
+	--ink-primary, etc. — and get the focused-mode values automatically.
+*/
+[data-emphasis='focused'] {
+	--fill-primary: var(--color-stone-900);
+	--fill-secondary: var(--color-stone-800);
+	--fill-auxiliary: var(--color-stone-700);
 
-		--color: hsla(206, 66%, 47%, 1.00);
-		--highlight: hsla(190, 90%, 40%, 1.00);
+	--ink-primary: var(--color-stone-50);
+	--ink-secondary: color-mix(in oklch, var(--ink-primary) 87%, var(--fill-primary));
+	--ink-auxiliary: color-mix(in oklch, var(--ink-primary) 45%, var(--fill-primary));
 
-		--shadow: rgba(0,0,0,.8);
+	--stroke-primary: var(--color-stone-600);
+	--stroke-secondary: var(--color-stone-700);
+	--stroke-auxiliary: var(--color-stone-800);
 
-		--corners: 10px; /* or whatevers */
+	--accent: var(--color-blue-300);
 
-		--paper:  hsla(217, 8%, 13%, 1.00); 
-		--paper2: hsla(217, 6%, 17%, 1.00);  /*bunker*/
-		--ink: hsla(0, 0%, 96%, 1.00);  /*whitesmoke*/
-	}
+	/* Alias tokens must be re-declared per scope: a custom property
+	   inherits as its RESOLVED value, so --link-color computed against
+	   root's --accent and won't see this scope's repaint on its own. */
+	--link-color: var(--accent);
 }
+
+/* Apply re-painted tokens at any element in a scope so its background
+   and color use the scope's values (children inherit). */
+[data-emphasis] {
+	background-color: var(--fill-primary);
+	color: var(--ink-primary);
+}
+
+
+/* @import 'developer-styles.css'; */
+/* Debug overlay — borders / wireframe mode for building. */

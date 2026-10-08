@@ -1,0 +1,49 @@
+/*
+	Viewport interaction
+
+	how the page behaves with the browser viewport.
+	Scroll, scrollbar gutter, modal scroll lock.
+*/
+
+html {
+	scrollbar-gutter: stable;
+	/*
+		Reserves the scrollbar's space so layout doesn't shift between short
+		pages (no scrollbar) and long pages (scrollbar) - or when modals lock
+		body scroll. Plug in a mouse to show it clearly. 
+
+		The cost of being persistent is almost always worth it.
+	*/
+}
+
+html:has(dialog[open]) {
+	overflow: hidden;
+	/*
+		Lock page scroll while a native <dialog> is open via showModal().
+		The platform doesn't do this automatically - the page behind the
+		dialog stays scrollable by default. Pairs with scrollbar-gutter
+		above so no horizontal jolt when the scrollbar visually disappears.
+
+		Double check that this doesn't change scroll position.
+
+		iOS caveat: Safari ignores overflow: hidden for touch scroll on the
+		document. Page can still rubber-band behind the modal. Full lock on
+		iOS needs JS to fix the body in place and restore scroll position.
+	*/
+}
+
+:target {
+	scroll-margin-block: var(--target-scroll-margin, 3rem);
+	/*
+		When you use fragment-link navigation it'll jump to that but leave breathing room 
+		instead of being jammed at the viewport edge. 
+
+		Default 3rem is predictable regardless of target
+		type (vs ex unit we've seen people use that is relative to the font size 
+		and will show different links in different places and break consistency. 
+
+		Project can override via --target-scroll-margin in settings.css
+		(you can set it relative to sticky header height, or to 5ex for
+		font-proportional behavior).
+	*/
+}

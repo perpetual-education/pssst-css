@@ -1,29 +1,11 @@
+/*
+	Structure — layout selection. Each file in /layouts/ is one layout
+	(a complete site shape, not a piece). Import one. Frameworks that swap
+	layout per route would import different ones in different bundles.
 
-body {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh; 
-	/* be at least a full viewport height */
-	/* consider 100svh and 100dvh too */
-} 
+	Add your own files in /layouts/ and import them here.
+*/
 
-main {
-	flex-grow: 1; 
-	/* fill up available space which happens push the footer down to the bottom */
-}
+@import 'layouts/default-layout.css';
 
-inner-column {
-	display: block;
-	/*	width: 98%; maybe? */
-	max-width: 1100px; /* could be a variable in settings */
-	margin-inline: auto; /* horizontally center this by default */
-	padding: 30px 16px; /* a loose default */
-
-	container-type: inline-size;
-}
-
-/*.site-header {
-	position: sticky;
-	top: 0;
-	z-index: 5;
-}*/
+/*@import 'layouts/example-other-layout.css';*/

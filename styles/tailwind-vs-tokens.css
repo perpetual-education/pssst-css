@@ -1,0 +1,88 @@
+/*
+	Tailwind vs tokens — exhibit page styles.
+
+	This file is the token half of the argument. The show-preview component
+	below is the entire investment: one class, geometry, and token slots.
+	The Tailwind half of the argument lives in the page's markup — on
+	purpose, because markup is where Tailwind keeps everything.
+
+	Exhibit-only CSS: this stays a page stylesheet, not a components/ file,
+	because the page is a rhetorical exhibit rather than part of the kit.
+*/
+
+
+/* ===== The component under test ===== */
+/*
+	Named by role (a compact stand-in that links to the full thing), not by
+	look. It consumes token slots only — it has no idea which band it's
+	sitting in, and that's the whole point of the page.
+*/
+
+show-preview {
+	display: block;
+	max-width: 340px;
+	background-color: var(--fill-secondary);
+	border: 1px solid var(--stroke-secondary);
+	border-radius: 8px;
+	overflow: clip;
+
+	text-content {
+		padding: 16px;
+	}
+
+	p {
+		margin-top: 6px;
+		color: var(--ink-secondary);
+	}
+
+	a {
+		margin-top: 12px;
+	}
+}
+
+
+/* ===== Exhibit scaffolding ===== */
+
+.comparison-page {
+
+	main section {
+		padding-block: 60px;
+	}
+
+	.band-note {
+		margin-top: 20px;
+		max-width: 60ch;
+		color: var(--ink-secondary);
+	}
+}
+
+demo-pair {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 30px;
+	margin-top: 30px;
+
+	figure {
+		flex: 1 1 300px;
+		max-width: 380px;
+	}
+
+	figcaption {
+		margin-bottom: 10px;
+		color: var(--ink-auxiliary);
+	}
+}
+
+receipt-block {
+	display: block;
+	margin-top: 30px;
+
+	pre {
+		margin-top: 10px;
+		padding: 16px;
+		background-color: var(--fill-secondary);
+		border: 1px solid var(--stroke-secondary);
+		border-radius: 8px;
+		overflow-x: auto;
+	}
+}
