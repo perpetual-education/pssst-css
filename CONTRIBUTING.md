@@ -1,6 +1,6 @@
-# PSSST
+# Contributing to PSSST
 
-House conventions: `../CLAUDE.md`. What pssst is for: README.md.
+What pssst is for: README.md.
 
 ## What goes in
 
