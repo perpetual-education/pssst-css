@@ -53,6 +53,8 @@
 
 /* Apply the resolved tokens at the document root */
 html {
+	--white: #efefef;
+	--ink: var(--white);
 	background-color: var(--fill-primary);
 	color: var(--ink-primary);
 }

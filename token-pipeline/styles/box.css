@@ -1,0 +1,32 @@
+/*
+	The component. It reads semantic tokens and NOTHING else — no hex, no oklch,
+	no raw values. That invariant is the whole demo: this file never changes when
+	the brand, the mode, or the underlying palette changes. Verify it with:
+
+		grep -nE '#[0-9a-fA-F]{3,6}|oklch|rgb\(' styles/box.css   (must be empty)
+*/
+
+.box-outer {
+	max-width: 20rem;
+	padding: 2rem;
+	border: 2px solid var(--stroke-primary);
+	border-radius: 12px;
+	background-color: var(--fill-secondary);
+	color: var(--ink-primary);
+}
+
+.label {
+	margin: 0;
+	font-weight: 600;
+}
+
+.box-outer > .label {
+	margin-bottom: 1rem;
+}
+
+.box-inner {
+	padding: 1.5rem;
+	border: 2px solid var(--stroke-primary);
+	border-radius: 8px;
+	background-color: var(--fill-primary);
+}

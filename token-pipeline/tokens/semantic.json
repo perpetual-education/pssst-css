@@ -1,0 +1,29 @@
+{
+	"_comment": "Semantic tokens: named by hierarchy position (primary/secondary/auxiliary), NOT by appearance. Two mode sets. The names never change across mode or brand — only which ramp rung they alias. That constancy is the whole point: box.css reads --fill-primary and never learns which brand or mode it is in.",
+
+	"light": {
+		"fill":   {
+			"primary":   { "$type": "color", "$value": "{ramp.50}" },
+			"secondary": { "$type": "color", "$value": "{ramp.100}" }
+		},
+		"ink":    {
+			"primary":   { "$type": "color", "$value": "{ramp.900}" }
+		},
+		"stroke": {
+			"primary":   { "$type": "color", "$value": "{ramp.200}" }
+		}
+	},
+
+	"dark": {
+		"fill":   {
+			"primary":   { "$type": "color", "$value": "{ramp.900}" },
+			"secondary": { "$type": "color", "$value": "{ramp.800}" }
+		},
+		"ink":    {
+			"primary":   { "$type": "color", "$value": "{ramp.50}" }
+		},
+		"stroke": {
+			"primary":   { "$type": "color", "$value": "{ramp.200}" }
+		}
+	}
+}
