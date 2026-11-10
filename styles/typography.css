@@ -56,8 +56,15 @@ body {
 	font-size: var(--type-anchor);
 }
 
-h1, h2, h3, h4, p {
+/* Set once, inherited everywhere: `pretty` does nothing to a one-line
+   label and fixes the orphan on any prose, so no element ever needs
+   adding to a list. Headings opt out with `balance`. */
+body {
 	text-wrap: pretty;
+}
+
+h1, h2 {
+	text-wrap: balance;
 }
 
 
@@ -78,7 +85,6 @@ p {
 	font-size: 1rem;
 	line-height: 1.5;
 	max-width: 72ch;
-	text-wrap: pretty;
 
 	em { font-style: italic; }
 	strong { font-weight: 700; }
@@ -156,6 +162,9 @@ p {
 
 	h2 + p, h3 + p { margin-top: 1em; }
 	p + h2, p + h3 { margin-top: 1.3em; }
+
+	p + table { margin-top: 1em; }
+	table + p, table + table { margin-top: 1.7em; }
 }
 
 

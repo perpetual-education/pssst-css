@@ -1,3 +1,15 @@
+/* Never fake italics (house rule, 2026-10-22). When a family has no italic
+   cut, the browser slants the upright letters instead - and a faked slant
+   gets none of a real italic's drawing or spacing (on derekthomaswood.com it
+   leaned "actually" into the next word). So the browser may never synthesize
+   one: an <em> in a family with no italic stays marked up and shows upright,
+   until the family gets a real italic cut, the emphasis picks another look
+   the font really has (weight, color), or the font changes. Picking a body
+   family: it needs a real italic. */
+html {
+	font-synthesis-style: none;
+}
+
 a {
 	/* we use links as parent elements so often, that we can default to this */
 	display: block;
